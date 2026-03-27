@@ -1,0 +1,604 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum PostStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum PostType {
+  ARTICLE
+  DREAM_INTERPRETATION
+  SYMBOL
+}
+
+enum PageType {
+  CONTENT
+  LANDING
+  HUB
+  SUPPORT
+}
+
+enum TemplateType {
+  ARTICLE
+  DREAM
+  SYMBOL
+  HUB
+  GUIDE
+  LANDING
+}
+
+enum VerticalType {
+  DREAMS
+  SYMBOLS
+  ANGEL_NUMBERS
+  GENERIC
+}
+
+enum BackupType {
+  DATABASE
+  MEDIA
+  FULL
+}
+
+enum BackupStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum AnalyticsEventType {
+  PAGE_VIEW
+  AD_IMPRESSION
+  AD_CLICK
+  AFFILIATE_CLICK
+  SEARCH_USAGE
+  NEWSLETTER_SIGNUP
+  NEWSLETTER_VIEW
+  OUTBOUND_CLICK
+  WEB_VITAL
+  CLIENT_ERROR
+}
+
+enum NewsletterStatus {
+  ACTIVE
+  UNSUBSCRIBED
+}
+
+enum TopicIntent {
+  INFORMATIONAL
+  COMMERCIAL
+  INVESTIGATIONAL
+  NAVIGATIONAL
+}
+
+enum TopicPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TopicStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+}
+
+enum OpportunityStatus {
+  READY_TO_WRITE
+  IN_PROGRESS
+  PUBLISHED
+  REFRESH_NEEDED
+  DISMISSED
+}
+
+enum RefreshStatus {
+  FRESH
+  WATCH
+  REFRESH_NEEDED
+  IN_REFRESH
+  REFRESHED
+}
+
+model User {
+  id                   String         @id @default(cuid())
+  email                String         @unique
+  name                 String?
+  slug                 String?        @unique
+  headline             String?
+  bio                  String?        @db.Text
+  credentials          String?        @db.Text
+  methodology          String?        @db.Text
+  expertise            Json?
+  avatarUrl            String?
+  trustStatement       String?        @db.Text
+  publicProfile        Boolean        @default(false)
+  passwordHash         String
+  role                 Role           @default(EDITOR)
+  createdAt            DateTime       @default(now())
+  posts                Post[]
+  topicClustersCreated TopicCluster[] @relation("TopicCreator")
+  topicBriefsCreated   TopicBrief[]   @relation("BriefCreator")
+  auditLogs            AdminAuditLog[]
+}
+
+model Site {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  primaryDomain    String   @unique
+  secondaryDomains Json?
+  siteUrl          String   @unique
+  locale           String   @default("ro")
+  siteType         String   @default("publisher")
+  themeKey         String   @default("candvisam")
+  templatePack     String   @default("candvisam")
+  logoText         String?
+  tagline          String?  @db.Text
+  description      String?  @db.Text
+  searchPath       String   @default("/cauta")
+  dictionaryPath   String?  @default("/dictionar")
+  footerLinks      Json?
+  homepageSections Json?
+  featureFlags     Json?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  categories       Category[]
+  posts            Post[]
+  symbols          SymbolEntry[]
+  redirects        Redirect[]
+  seoSettings      SeoSettings?
+  topicClusters    TopicCluster[]
+  topicBriefs      TopicBrief[]
+  contentOpportunities ContentOpportunity[]
+  searchInsights   SearchQueryInsight[]
+}
+
+model Category {
+  id                   String               @id @default(cuid())
+  siteId               String
+  site                 Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name                 String
+  slug                 String               @db.VarChar(191)
+  description          String?              @db.Text
+  metaTitle            String?
+  metaDesc             String?              @db.Text
+  parentId             String?
+  parent               Category?            @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children             Category[]           @relation("CategoryToCategory")
+  sortOrder            Int                  @default(0)
+  createdAt            DateTime             @default(now())
+  posts                Post[]
+  topicClusters        TopicCluster[]
+  contentOpportunities ContentOpportunity[]
+
+  @@unique([siteId, slug])
+  @@index([siteId, sortOrder])
+}
+
+model Post {
+  id                 String               @id @default(cuid())
+  siteId             String
+  site               Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  title              String
+  slug               String               @db.VarChar(191)
+  excerpt            String?              @db.Text
+  contentJson        Json
+  contentHtml        String               @db.LongText
+  postType           PostType             @default(ARTICLE)
+  pageType           PageType             @default(CONTENT)
+  templateType       TemplateType         @default(ARTICLE)
+  verticalType       VerticalType         @default(DREAMS)
+  status             PostStatus           @default(DRAFT)
+  metaTitle          String?
+  metaDescription    String?              @db.Text
+  focusKeyword       String?
+  canonicalUrl       String?
+  noIndex            Boolean              @default(false)
+  ogTitle            String?
+  ogDescription      String?              @db.Text
+  ogImageId          String?
+  geoScore           Int?
+  geoBreakdown       Json?
+  directAnswer       String?              @db.Text
+  speakableSections  Json?
+  schemaMarkup       Json?
+  internalLinksUsed  Json?
+  revisions          Json?
+  lastReviewedAt     DateTime?
+  contentDecayScore  Int                  @default(0)
+  contentHealthScore Int                  @default(100)
+  refreshPriority    Int                  @default(0)
+  refreshStatus      RefreshStatus        @default(FRESH)
+  refreshNotes       String?              @db.Text
+  scheduledAt        DateTime?
+  publishedAt        DateTime?
+  categoryId         String?
+  category           Category?            @relation(fields: [categoryId], references: [id])
+  authorId           String
+  author             User                 @relation(fields: [authorId], references: [id])
+  featuredImageId    String?
+  sourceType         String?
+  publisherPageId    String?
+  publisherCampaign  String?
+  topicClusterId     String?
+  topicCluster       TopicCluster?        @relation("PostTopicCluster", fields: [topicClusterId], references: [id])
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  symbolEntries      SymbolEntry[]
+  topicBriefs        TopicBrief[]
+  contentOpportunities ContentOpportunity[]
+  pillarForClusters  TopicCluster[]       @relation("ClusterPillarPost")
+
+  @@unique([siteId, slug])
+  @@index([siteId, status, publishedAt])
+  @@index([topicClusterId])
+}
+
+model AffiliateProduct {
+  id                String             @id @default(cuid())
+  title             String
+  slug              String             @unique
+  merchant          String?
+  network           String?
+  affiliateUrl      String             @db.Text
+  image             String?
+  priceText         String?
+  badge             String?
+  category          String?
+  active            Boolean            @default(true)
+  priority          Int                @default(0)
+  relatedKeywords   Json?
+  relatedSymbols    Json?
+  relatedCategories Json?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  clicks            AffiliateClickLog[]
+  placements        AffiliatePlacement[]
+}
+
+model AffiliateClickLog {
+  id           String           @id @default(cuid())
+  productId    String
+  product      AffiliateProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  pagePath     String?
+  templateType String?
+  referrer     String?
+  createdAt    DateTime         @default(now())
+
+  @@index([productId, createdAt])
+}
+
+model AffiliatePlacement {
+  id           String           @id @default(cuid())
+  productId    String
+  product      AffiliateProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  pagePath     String
+  templateType String
+  createdAt    DateTime         @default(now())
+
+  @@index([productId, createdAt])
+}
+
+model SymbolEntry {
+  id                   String               @id @default(cuid())
+  siteId               String
+  site                 Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name                 String
+  slug                 String               @db.VarChar(191)
+  letter               String               @db.VarChar(1)
+  shortDefinition      String               @db.Text
+  fullContent          String               @db.LongText
+  contentJson          Json
+  schemaMarkup         Json?
+  metaTitle            String?
+  metaDescription      String?              @db.Text
+  geoScore             Int?
+  relatedSymbols       Json?
+  postId               String?
+  post                 Post?                @relation(fields: [postId], references: [id])
+  publishedAt          DateTime?
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  contentOpportunities ContentOpportunity[]
+
+  @@unique([siteId, slug])
+  @@index([siteId, letter])
+}
+
+model TopicCluster {
+  id                    String               @id @default(cuid())
+  siteId                String
+  site                  Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name                  String
+  slug                  String               @db.VarChar(191)
+  intent                TopicIntent          @default(INFORMATIONAL)
+  priority              TopicPriority        @default(MEDIUM)
+  status                TopicStatus          @default(PLANNING)
+  monetizationPotential Int                  @default(50)
+  geoPotential          Int                  @default(50)
+  difficulty            Int                  @default(50)
+  description           String?              @db.Text
+  pillarTitle           String?
+  pillarMetaTitle       String?
+  pillarMetaDescription String?              @db.Text
+  outlineTemplate       Json?
+  supportAngles         Json?
+  pillarPostId          String?
+  pillarPost            Post?                @relation("ClusterPillarPost", fields: [pillarPostId], references: [id])
+  categoryId            String?
+  category              Category?            @relation(fields: [categoryId], references: [id])
+  createdById           String?
+  createdBy             User?                @relation("TopicCreator", fields: [createdById], references: [id])
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  keywords              TopicKeyword[]
+  briefs                TopicBrief[]
+  opportunities         ContentOpportunity[]
+  posts                 Post[]               @relation("PostTopicCluster")
+  searchInsights        SearchQueryInsight[]
+
+  @@unique([siteId, slug])
+  @@index([siteId, status, priority])
+  @@index([status, priority])
+}
+
+model TopicKeyword {
+  id                    String         @id @default(cuid())
+  name                  String
+  slug                  String
+  intent                TopicIntent    @default(INFORMATIONAL)
+  priority              TopicPriority  @default(MEDIUM)
+  status                TopicStatus    @default(ACTIVE)
+  monetizationPotential Int            @default(50)
+  geoPotential          Int            @default(50)
+  difficulty            Int            @default(50)
+  clusterId             String
+  cluster               TopicCluster   @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  @@unique([clusterId, slug])
+}
+
+model TopicBrief {
+  id                    String             @id @default(cuid())
+  siteId                String
+  site                  Site               @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name                  String
+  slug                  String             @db.VarChar(191)
+  intent                TopicIntent        @default(INFORMATIONAL)
+  priority              TopicPriority      @default(MEDIUM)
+  status                OpportunityStatus  @default(READY_TO_WRITE)
+  monetizationPotential Int                @default(50)
+  geoPotential          Int                @default(50)
+  difficulty            Int                @default(50)
+  title                 String?
+  metaTitle             String?
+  metaDescription       String?            @db.Text
+  outline               Json?
+  faq                   Json?
+  internalLinks         Json?
+  geoBlocks             Json?
+  monetizationNotes     String?            @db.Text
+  opportunityId         String?
+  opportunity           ContentOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+  clusterId             String?
+  cluster               TopicCluster?      @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  postId                String?
+  post                  Post?              @relation(fields: [postId], references: [id], onDelete: SetNull)
+  createdById           String?
+  createdBy             User?              @relation("BriefCreator", fields: [createdById], references: [id])
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  @@unique([siteId, slug])
+  @@index([siteId, status, priority])
+  @@index([status, priority])
+}
+
+model ContentOpportunity {
+  id                    String              @id @default(cuid())
+  siteId                String
+  site                  Site                @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name                  String
+  slug                  String              @db.VarChar(191)
+  intent                TopicIntent         @default(INFORMATIONAL)
+  priority              TopicPriority       @default(MEDIUM)
+  status                OpportunityStatus   @default(READY_TO_WRITE)
+  monetizationPotential Int                 @default(50)
+  geoPotential          Int                 @default(50)
+  difficulty            Int                 @default(50)
+  opportunityType       String?
+  summary               String?             @db.Text
+  recommendedTitle      String?
+  recommendedMeta       String?             @db.Text
+  outline               Json?
+  faq                   Json?
+  internalLinks         Json?
+  geoBlocks             Json?
+  monetizationNotes     String?             @db.Text
+  clusterId             String?
+  cluster               TopicCluster?       @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  categoryId            String?
+  category              Category?           @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  symbolId              String?
+  symbol                SymbolEntry?        @relation(fields: [symbolId], references: [id], onDelete: SetNull)
+  postId                String?
+  post                  Post?               @relation(fields: [postId], references: [id], onDelete: SetNull)
+  briefs                TopicBrief[]
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@unique([siteId, slug])
+  @@index([siteId, status, priority])
+  @@index([status, priority])
+  @@index([clusterId])
+}
+
+model SearchQueryInsight {
+  id                  String        @id @default(cuid())
+  siteId              String
+  site                Site          @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  query               String
+  slug                String
+  pagePath            String        @default("") @db.VarChar(191)
+  clicks              Int           @default(0)
+  impressions         Int           @default(0)
+  ctr                 Float         @default(0)
+  position            Float         @default(0)
+  source              String?       @db.VarChar(64)
+  intent              TopicIntent   @default(INFORMATIONAL)
+  clusterLabel        String?       @db.VarChar(191)
+  recommendedTemplate String?       @db.VarChar(64)
+  recommendedCta      String?       @db.VarChar(128)
+  monetizationFit     String?       @db.VarChar(128)
+  opportunityScore    Int           @default(0)
+  clusterId           String?
+  cluster             TopicCluster? @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  lastImportedAt      DateTime      @default(now())
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  
+  @@unique([siteId, slug, pagePath])
+  @@index([siteId, opportunityScore, impressions])
+  @@index([opportunityScore, impressions])
+  @@index([clusterId])
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  width        Int?
+  height       Int?
+  url          String
+  urlOriginal  String?
+  altText      String?
+  caption      String?
+  uploadedAt   DateTime @default(now())
+}
+
+model Redirect {
+  id         String   @id @default(cuid())
+  siteId     String
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  fromPath   String   @db.VarChar(191)
+  toPath     String
+  statusCode Int      @default(301)
+  isActive   Boolean  @default(true)
+  hits       Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@unique([siteId, fromPath])
+  @@index([siteId, isActive, hits])
+}
+
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  actorEmail String?
+  action     String
+  entityType String
+  entityId   String?
+  route      String
+  method     String
+  ip         String?
+  meta       Json?
+  createdAt  DateTime @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([entityType, createdAt])
+  @@index([action, createdAt])
+}
+
+model SeoSettings {
+  id               String   @id @default(cuid())
+  siteId           String   @unique
+  site             Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  siteName         String   @default("C??nd Vis??m")
+  siteUrl          String   @default("https://candvisam.ro")
+  defaultMetaTitle String?
+  defaultMetaDesc  String?  @db.Text
+  defaultOgImage   String?
+  adsConfig        Json?
+  robotsTxt        String?  @db.Text
+  googleVerification String?
+  notifyEmail      String?
+  notifyOnBackup   Boolean  @default(true)
+  notifyOnErrors   Boolean  @default(true)
+  enableAutoInternalLinks Boolean @default(false)
+  updatedAt        DateTime @updatedAt
+}
+
+model BackupLog {
+  id         String       @id @default(cuid())
+  type       BackupType
+  status     BackupStatus
+  filePath   String?
+  fileSize   Int?
+  duration   Int?
+  error      String?      @db.Text
+  createdAt  DateTime     @default(now())
+}
+
+model AnalyticsEvent {
+  id           String             @id @default(cuid())
+  eventType    AnalyticsEventType
+  route        String
+  templateType String?
+  contentId    String?
+  referrer     String?
+  deviceType   String?
+  meta         Json?
+  createdAt    DateTime           @default(now())
+
+  @@index([eventType, createdAt])
+  @@index([route, createdAt])
+}
+
+model NewsletterSubscriber {
+  id           String           @id @default(cuid())
+  email        String           @unique
+  name         String?
+  status       NewsletterStatus @default(ACTIVE)
+  sourcePath   String?
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
+  utmContent   String?
+  utmTerm      String?
+  firstReferrer String?
+  lastReferrer String?
+  lastVariant  String?          @db.VarChar(1)
+  signupCount  Int              @default(1)
+  lastSignupAt DateTime         @default(now())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([status, createdAt])
+  @@index([utmSource, createdAt])
+  @@index([utmCampaign, createdAt])
+}
+
+
+

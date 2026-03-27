@@ -1,0 +1,13 @@
+ALTER TABLE `AnalyticsEvent`
+  MODIFY COLUMN `eventType` ENUM(
+    'PAGE_VIEW',
+    'AD_IMPRESSION',
+    'AD_CLICK',
+    'AFFILIATE_CLICK',
+    'SEARCH_USAGE',
+    'NEWSLETTER_SIGNUP',
+    'NEWSLETTER_VIEW',
+    'OUTBOUND_CLICK',
+    'WEB_VITAL',
+    'CLIENT_ERROR'
+  ) NOT NULL;

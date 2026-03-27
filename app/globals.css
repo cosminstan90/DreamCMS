@@ -1,0 +1,130 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fefdf8;
+  --foreground: #221b35;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--foreground);
+  background: radial-gradient(circle at top, #f4ecff 0%, #fefdf8 42%, #fdfaf3 100%);
+  font-family: var(--font-geist-sans), 'Segoe UI', sans-serif;
+}
+
+.dreamcms-block {
+  margin: 1.25rem 0;
+  border: 1px solid #d8ccf2;
+  background: #fffdf8;
+  border-radius: 1rem;
+  padding: 1rem 1.1rem;
+}
+
+.dreamcms-block-heading,
+.dreamcms-block h2,
+.dreamcms-block h3,
+.dreamcms-block h4 {
+  color: #2f2050;
+}
+
+.dreamcms-block-section + .dreamcms-block-section {
+  margin-top: 0.85rem;
+}
+
+.dreamcms-quick-answer {
+  background: linear-gradient(180deg, #f4f7ff 0%, #ffffff 100%);
+  border-color: #c3d3ff;
+}
+
+.dreamcms-pros-cons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+}
+
+.dreamcms-pros,
+.dreamcms-cons,
+.dreamcms-expert-take blockquote,
+.dreamcms-symbol-grid-item,
+.dreamcms-symbol-header {
+  border-radius: 0.9rem;
+}
+
+.dreamcms-pros {
+  background: #edfdf4;
+  padding: 0.85rem;
+}
+
+.dreamcms-cons {
+  background: #fff1f1;
+  padding: 0.85rem;
+}
+
+.dreamcms-callout {
+  border-left: 4px solid #8b5cf6;
+  background: #f7f2ff;
+  border-radius: 0.8rem;
+  padding: 0.85rem 1rem;
+}
+
+.dreamcms-callout-warning,
+.dreamcms-when-to-worry {
+  border-color: #f59e0b;
+  background: #fff7e6;
+}
+
+.dreamcms-symbol-header {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  background: #f7f2ff;
+  padding: 0.9rem;
+}
+
+.dreamcms-symbol-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.dreamcms-symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dreamcms-symbol-grid-item {
+  background: #f7f2ff;
+  padding: 0.85rem;
+}
+
+.dreamcms-expert-take {
+  background: linear-gradient(180deg, #f8f6ff 0%, #ffffff 100%);
+}
+
+.dreamcms-expert-take blockquote {
+  margin: 0.6rem 0;
+  background: #f1ecff;
+  padding: 0.9rem 1rem;
+  font-style: italic;
+}
+
+.dreamcms-block-footnote,
+.dreamcms-quick-answer-support {
+  color: #5f4b80;
+  font-size: 0.95rem;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
