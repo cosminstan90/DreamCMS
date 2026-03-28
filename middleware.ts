@@ -21,9 +21,9 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 /** Remove expired entries to prevent unbounded Map growth. */
 function pruneRateLimitMap() {
   const now = Date.now()
-  for (const [k, v] of rateLimitMap) {
+  rateLimitMap.forEach((v, k) => {
     if (v.resetAt < now) rateLimitMap.delete(k)
-  }
+  })
 }
 
 const RATE_LIMITS = {
