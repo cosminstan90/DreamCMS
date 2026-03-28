@@ -30,7 +30,7 @@ export default async function HomePage() {
   ])
   const { siteName, siteUrl, seoSettings, adsConfig, dictionaryPath } = branding
   const homepageSections = siteContext.site.homepageSections || siteContext.sitePack.homepage.sections
-  const sectionMap = new Map(homepageSections.map((section) => [section.key, section]))
+  const sectionMap = new Map(homepageSections.map((section: any) => [section.key, section]))
   const siteWhere = siteContext.site.id ? { siteId: siteContext.site.id } : undefined
 
   const postsLimit = sectionMap.get('latestPosts')?.enabled === false ? 0 : sectionMap.get('latestPosts')?.limit || 6
