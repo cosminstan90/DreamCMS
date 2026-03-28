@@ -9,7 +9,7 @@
 
 set -euo pipefail
 
-APP_DIR="/home/dreamcms/htdocs/app"
+APP_DIR="/home/pagani.ro/htdocs/app"
 SKIP_PULL=false
 
 for arg in "$@"; do
