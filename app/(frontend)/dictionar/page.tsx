@@ -22,11 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
     })
   } catch {
     return buildMetadata({
-      siteUrl: 'https://candvisam.ro',
+      siteUrl: 'https://pagani.ro',
       siteName: 'Cand Visam',
       title: 'Dictionar de simboluri din vise',
       description: 'Index complet A-Z cu simboluri onirice si interpretari detaliate.',
-      canonical: 'https://candvisam.ro/dictionar',
+      canonical: 'https://pagani.ro/dictionar',
     })
   }
 }

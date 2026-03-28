@@ -9,7 +9,7 @@ type FrontendTemplatePack = {
 }
 
 const frontendTemplatePacks: Record<string, FrontendTemplatePack> = {
-  candvisam: {
+  pagani: {
     shellVariant: 'dreamy',
     homepageVariant: 'dreamy',
     dictionaryVariant: 'dreamy',
@@ -22,6 +22,6 @@ const frontendTemplatePacks: Record<string, FrontendTemplatePack> = {
 }
 
 export function getFrontendTemplatePack(packKey?: string | null) {
-  if (!packKey) return frontendTemplatePacks.candvisam
-  return frontendTemplatePacks[packKey] || frontendTemplatePacks.candvisam
+  if (!packKey) return frontendTemplatePacks.pagani
+  return frontendTemplatePacks[packKey] || frontendTemplatePacks.pagani
 }

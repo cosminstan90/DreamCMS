@@ -48,7 +48,7 @@ function buildDigestHtml(items: Array<{ title: string; excerpt: string | null; u
 
 export async function sendWeeklyDigest(maxRecipients = 500) {
   const settings = await prisma.seoSettings.findFirst()
-  const siteUrl = (settings?.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (settings?.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
 
   const since = new Date()
   since.setDate(since.getDate() - 7)

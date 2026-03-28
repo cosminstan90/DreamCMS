@@ -117,7 +117,7 @@ export async function POST(req: Request) {
   }
 
   if (action === 'ping-google') {
-    const siteUrl = (context.seoSettings?.siteUrl || context.site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+    const siteUrl = (context.seoSettings?.siteUrl || context.site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
     const target = `${siteUrl}/sitemap.xml`
     const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(target)}`
     const result = await pingWithRetry(pingUrl)
@@ -125,7 +125,7 @@ export async function POST(req: Request) {
   }
 
   if (action === 'ping-bing') {
-    const siteUrl = (context.seoSettings?.siteUrl || context.site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+    const siteUrl = (context.seoSettings?.siteUrl || context.site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
     const target = `${siteUrl}/sitemap.xml`
     const pingUrl = `https://www.bing.com/ping?sitemap=${encodeURIComponent(target)}`
     const result = await pingWithRetry(pingUrl)

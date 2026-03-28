@@ -10,13 +10,13 @@ export function wordCountFromHtml(html: string) {
 }
 
 export function countInternalLinks(html: string) {
-  return (html.match(/<a[^>]+href=["'](\/|https?:\/\/(www\.)?candvisam\.ro)[^"']*["'][^>]*>/gi) || []).length
+  return (html.match(/<a[^>]+href=["'](\/|https?:\/\/(www\.)?pagani\.ro)[^"']*["'][^>]*>/gi) || []).length
 }
 
 export function extractInternalLinks(html: string) {
   return Array.from(
     new Set(
-      (html.match(/href=["']((\/|https?:\/\/(www\.)?candvisam\.ro)[^"']*)["']/gi) || [])
+      (html.match(/href=["']((\/|https?:\/\/(www\.)?pagani\.ro)[^"']*)["']/gi) || [])
         .map((entry) => entry.replace(/^href=["']/, '').replace(/["']$/, '')),
     ),
   )

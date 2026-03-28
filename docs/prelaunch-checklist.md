@@ -15,7 +15,7 @@ npm run prelaunch:check
 Exemplu local cu host mapping:
 
 ```bash
-PRELAUNCH_TARGETS="https://candvisam.ro,https://numarangelic.ro" PRELAUNCH_REQUEST_BASE="http://127.0.0.1:3001" npm run prelaunch:check
+PRELAUNCH_TARGETS="https://pagani.ro,https://numarangelic.ro" PRELAUNCH_REQUEST_BASE="http://127.0.0.1:3001" npm run prelaunch:check
 ```
 
 ## Verificari acoperite

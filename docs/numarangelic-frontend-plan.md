@@ -1,7 +1,7 @@
 # NumarAngelic Frontend Plan
 
 ## Direction
-- Visual thesis: solar-spiritual, warm, luminous, ritual-like; less nocturnal than candvisam and more guidance-driven.
+- Visual thesis: solar-spiritual, warm, luminous, ritual-like; less nocturnal than pagani and more guidance-driven.
 - Content plan: reassurance first, interpretation second, next steps third, conversion last.
 - Interaction thesis: soft reveal-ins, light parallax on hero imagery, calm hover lift on guidance links and number clusters.
 

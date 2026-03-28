@@ -260,7 +260,7 @@ export async function POST(req: Request) {
     revalidatePath(`/${categorySlug}/${post.slug}`)
   }
 
-  const siteUrl = (seoSettings?.siteUrl || context.site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (seoSettings?.siteUrl || context.site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
   const url = categorySlug ? `${siteUrl}/${categorySlug}/${post.slug}` : `${siteUrl}/${post.slug}`
 
   return NextResponse.json({ success: true, postId: post.id, url, revalidated: true })

@@ -17,7 +17,7 @@ async function saveBuffers(baseName: string, originalExt: string, buffers: { web
     webp: path.join(uploadDir, `${baseName}.webp`),
     thumbnail: path.join(uploadDir, `${baseName}-thumb.webp`),
     ogImage: path.join(uploadDir, `${baseName}-og.webp`),
-    original: path.join(uploadDir, `${baseName}-orig${originalExt ? `.${originalExt}` : ''}`.replace(/\.\./g, '.')),
+    original: path.join(uploadDir, `${baseName}-orig${originalExt ? `.${originalExt}` : ''}`),
   }
 
   await Promise.all([
@@ -35,7 +35,7 @@ function buildUrls(baseName: string, originalExt: string) {
     webp: `/media/uploads/${baseName}.webp`,
     thumbnail: `/media/uploads/${baseName}-thumb.webp`,
     ogImage: `/media/uploads/${baseName}-og.webp`,
-    original: `/media/uploads/${baseName}-orig${originalExt ? `.${originalExt}` : ''}`.replace(/\.\./g, '.'),
+    original: `/media/uploads/${baseName}-orig${originalExt ? `.${originalExt}` : ''}`,
   }
 }
 
@@ -64,7 +64,8 @@ export async function POST(req: Request) {
   const nameWithoutExt = (file.name || 'upload').replace(/\.[^.]+$/, '')
   const slug = generateSlug(nameWithoutExt) || 'media'
   const baseName = `${Date.now()}-${slug}`
-  const originalExt = (file.name.match(/\.([^.]+)$/) || [])[1] || ''
+  // Extract and sanitize extension — only alphanumeric chars, prevents any path traversal
+  const originalExt = ((file.name.match(/\.([^.]+)$/) || [])[1] || '').toLowerCase().replace(/[^a-z0-9]/g, '')
 
   await saveBuffers(baseName, originalExt, { webp: processed.webp, thumbnail: processed.thumbnail, ogImage: processed.ogImage, original: originalBuffer })
   const urls = buildUrls(baseName, originalExt)

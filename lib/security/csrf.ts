@@ -6,8 +6,8 @@ function getAllowedOrigins(req: Request) {
     url.origin,
     process.env.NEXT_PUBLIC_SITE_URL,
     process.env.SITE_URL,
-    'https://candvisam.ro',
-    'https://www.candvisam.ro',
+    'https://pagani.ro',
+    'https://www.pagani.ro',
     'http://localhost:3000',
   ].filter(Boolean))
 }

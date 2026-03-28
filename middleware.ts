@@ -29,6 +29,8 @@ function pruneRateLimitMap() {
 const RATE_LIMITS = {
   '/api/auth/callback/credentials': { max: 5, windowMs: 15 * 60 * 1000 },
   '/api/newsletter/subscribe': { max: 20, windowMs: 15 * 60 * 1000 },
+  '/api/analytics/event': { max: 60, windowMs: 60 * 1000 },      // 60 events/min per IP
+  '/api/redirects/resolve': { max: 120, windowMs: 60 * 1000 },   // 120 lookups/min per IP
 } as const
 const MUTATION_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])
 
@@ -37,9 +39,10 @@ function getConfiguredOrigins(url: URL) {
     url.origin,
     process.env.NEXT_PUBLIC_SITE_URL,
     process.env.SITE_URL,
-    'https://candvisam.ro',
-    'https://www.candvisam.ro',
-    'http://localhost:3000',
+    'https://pagani.ro',
+    'https://www.pagani.ro',
+    // Allow localhost only in non-production environments
+    ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:3000', 'http://localhost:3001'] : []),
   ].filter(Boolean) as string[]
 }
 

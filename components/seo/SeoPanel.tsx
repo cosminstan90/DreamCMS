@@ -129,7 +129,7 @@ export function SeoPanel(props: SeoPanelProps) {
       const density = words.length > 0 ? Math.round((matches / words.length) * 1000) / 10 : 0
 
       const h2Count = (contentHtml.match(/<h2[^>]*>/gi) || []).length
-      const internalLinks = (contentHtml.match(/<a[^>]+href=["'](\/|https?:\/\/(www\.)?candvisam\.ro)[^"']+["'][^>]*>/gi) || []).length
+      const internalLinks = (contentHtml.match(/<a[^>]+href=["'](\/|https?:\/\/(www\.)?pagani\.ro)[^"']+["'][^>]*>/gi) || []).length
       const imagesMissingAlt = (contentHtml.match(/<img[^>]+>/gi) || []).filter((img) => !/alt=/.test(img)).length
 
       setAnalysis({
@@ -167,7 +167,7 @@ export function SeoPanel(props: SeoPanelProps) {
   const scoreColor = seoScore >= 80 ? 'bg-emerald-500' : seoScore >= 55 ? 'bg-amber-500' : 'bg-rose-500'
 
   const categorySlug = categories.find((cat) => cat.id === categoryId)?.slug || ''
-  const fullUrl = `candvisam.ro/${categorySlug ? `${categorySlug}/` : ''}${slug}`
+  const fullUrl = `pagani.ro/${categorySlug ? `${categorySlug}/` : ''}${slug}`
 
   const keywordTone = (flag: boolean) => (flag ? 'text-emerald-400' : 'text-rose-400')
 

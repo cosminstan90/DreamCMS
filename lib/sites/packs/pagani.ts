@@ -1,8 +1,8 @@
 import { DEFAULT_SITE_EDITOR_FEATURES } from '@/lib/sites/editor-features'
 import type { SitePack } from '@/lib/sites/types'
 
-export const candvisamSitePack: SitePack = {
-  key: 'candvisam',
+export const paganiSitePack: SitePack = {
+  key: 'pagani',
   displayName: 'Cand Visam',
   shell: {
     logoText: 'CV',

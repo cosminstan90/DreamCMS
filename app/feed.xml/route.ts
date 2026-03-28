@@ -14,7 +14,7 @@ function escapeXml(input: string) {
 
 export async function GET() {
   const { site, seoSettings } = await getRequiredCurrentSite()
-  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
 
   const posts = await prisma.post.findMany({
     where: { siteId: site.id, status: 'PUBLISHED' },

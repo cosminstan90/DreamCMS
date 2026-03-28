@@ -1,3 +1,12 @@
+// Fail fast if NEXTAUTH_SECRET is missing or still the placeholder value
+const _secret = process.env.NEXTAUTH_SECRET
+if (!_secret || _secret === 'generate-with-openssl-rand-hex-32' || _secret.length < 32) {
+  throw new Error(
+    '[DreamCMS] NEXTAUTH_SECRET is missing or using the placeholder value.\n' +
+    'Generate a real secret with:  openssl rand -hex 32'
+  )
+}
+
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { Role } from "@prisma/client"

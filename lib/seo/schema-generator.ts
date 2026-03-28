@@ -127,7 +127,7 @@ export function generateSchema(
   category?: CategoryNode | null,
   speakableData?: SpeakableData,
 ) {
-  const siteUrl = seoSettings.siteUrl || 'https://candvisam.ro'
+  const siteUrl = seoSettings.siteUrl || 'https://pagani.ro'
   const siteName = seoSettings.siteName || 'Cand Visam'
   const slug = post.slug || ''
   const url = normalizeUrl(siteUrl, slug)

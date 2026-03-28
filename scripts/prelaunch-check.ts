@@ -14,7 +14,7 @@ type RequestContext = {
 }
 
 function parseTargets() {
-  const raw = (process.env.PRELAUNCH_TARGETS || 'https://candvisam.ro,https://numarangelic.ro')
+  const raw = (process.env.PRELAUNCH_TARGETS || 'https://pagani.ro,https://numarangelic.ro')
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean)

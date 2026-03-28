@@ -50,7 +50,7 @@ export async function generateAltText(description: string) {
   const apiKey = process.env.ANTHROPIC_API_KEY
   if (!apiKey) return ''
 
-  const prompt = `Genereaza un text ALT in romana, max 10 cuvinte, stil oniric specific candvisam.ro. Fii concret (ex: "femeie care viseaza sub luna plina"). Descriere: ${description}`
+  const prompt = `Genereaza un text ALT in romana, max 10 cuvinte, stil oniric specific pagani.ro. Fii concret (ex: "femeie care viseaza sub luna plina"). Descriere: ${description}`
   const result = await callClaude(prompt, apiKey)
   return result.split(' ').slice(0, 10).join(' ')
 }

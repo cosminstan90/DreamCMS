@@ -19,7 +19,7 @@ function normalizeHost(value: string | null | undefined) {
 function normalizeSiteUrl(value: string | null | undefined, fallbackHost: string) {
   const clean = String(value || '').trim()
   if (clean) return clean.replace(/\/$/, '')
-  const host = fallbackHost || 'candvisam.ro'
+  const host = fallbackHost || 'pagani.ro'
   return `https://${host}`
 }
 
@@ -66,8 +66,8 @@ export const resolveCurrentSite = cache(async () => {
           siteUrl: normalizeSiteUrl(matched.siteUrl, matched.primaryDomain),
           locale: matched.locale || 'ro',
           siteType: matched.siteType || 'publisher',
-          themeKey: matched.themeKey || 'candvisam',
-          templatePack: matched.templatePack || 'candvisam',
+          themeKey: matched.themeKey || 'pagani',
+          templatePack: matched.templatePack || 'pagani',
           logoText: matched.logoText,
           tagline: matched.tagline,
           description: matched.description,
@@ -79,13 +79,13 @@ export const resolveCurrentSite = cache(async () => {
         }
       : {
           name: seoSettings?.siteName || 'Cand Visam',
-          slug: 'candvisam',
-          primaryDomain: host || 'candvisam.ro',
-          siteUrl: normalizeSiteUrl(seoSettings?.siteUrl, host || 'candvisam.ro'),
+          slug: 'pagani',
+          primaryDomain: host || 'pagani.ro',
+          siteUrl: normalizeSiteUrl(seoSettings?.siteUrl, host || 'pagani.ro'),
           locale: 'ro',
           siteType: 'publisher',
-          themeKey: 'candvisam',
-          templatePack: 'candvisam',
+          themeKey: 'pagani',
+          templatePack: 'pagani',
           logoText: 'CV',
           tagline: 'Interpretari de vise, simboluri si ghiduri onirice',
           description: seoSettings?.defaultMetaDesc || 'Interpretari de vise si simboluri onirice.',
@@ -124,13 +124,13 @@ export const resolveCurrentSite = cache(async () => {
   } catch {
     const site: ResolvedSiteConfig = {
       name: 'Cand Visam',
-      slug: 'candvisam',
-      primaryDomain: host || 'candvisam.ro',
-      siteUrl: normalizeSiteUrl('', host || 'candvisam.ro'),
+      slug: 'pagani',
+      primaryDomain: host || 'pagani.ro',
+      siteUrl: normalizeSiteUrl('', host || 'pagani.ro'),
       locale: 'ro',
       siteType: 'publisher',
-      themeKey: 'candvisam',
-      templatePack: 'candvisam',
+      themeKey: 'pagani',
+      templatePack: 'pagani',
       logoText: 'CV',
       tagline: 'Interpretari de vise, simboluri si ghiduri onirice',
       description: 'Interpretari de vise si simboluri onirice.',

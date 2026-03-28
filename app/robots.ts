@@ -12,7 +12,7 @@ function hasAiBlockFlag(input: string) {
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const { site, seoSettings } = await getRequiredCurrentSite()
-  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
   const custom = seoSettings?.robotsTxt || ''
 
   const rules: MetadataRoute.Robots['rules'] = [

@@ -7,10 +7,10 @@ async function main() {
   const passwordHash = await bcrypt.hash('changeme123', 12)
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@candvisam.ro' },
+    where: { email: 'admin@pagani.ro' },
     update: {},
     create: {
-      email: 'admin@candvisam.ro',
+      email: 'admin@pagani.ro',
       name: 'Admin',
       passwordHash,
       role: 'ADMIN',
@@ -18,18 +18,18 @@ async function main() {
   })
 
   const site = await prisma.site.upsert({
-    where: { slug: 'candvisam' },
+    where: { slug: 'pagani' },
     update: {},
     create: {
       name: 'Cand Visam',
-      slug: 'candvisam',
-      primaryDomain: 'candvisam.ro',
-      secondaryDomains: ['www.candvisam.ro'],
-      siteUrl: 'https://candvisam.ro',
+      slug: 'pagani',
+      primaryDomain: 'pagani.ro',
+      secondaryDomains: ['www.pagani.ro'],
+      siteUrl: 'https://pagani.ro',
       locale: 'ro',
       siteType: 'publisher',
-      themeKey: 'candvisam',
-      templatePack: 'candvisam',
+      themeKey: 'pagani',
+      templatePack: 'pagani',
       logoText: 'CV',
       tagline: 'Interpretari de vise, simboluri si ghiduri onirice',
       description: 'Biblioteca editoriala despre vise, simboluri si sensuri onirice pentru publicul din Romania.',
@@ -66,7 +66,7 @@ async function main() {
       id: 'default-seo',
       siteId: site.id,
       siteName: 'Cand Visam',
-      siteUrl: 'https://candvisam.ro',
+      siteUrl: 'https://pagani.ro',
     },
   })
 

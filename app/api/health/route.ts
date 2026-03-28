@@ -21,7 +21,7 @@ export async function GET() {
     return NextResponse.json({
       status: 'ok',
       db: 'connected',
-      site: 'candvisam.ro',
+      site: 'pagani.ro',
       timestamp,
       uptimeSeconds: Math.round(process.uptime()),
       backup: lastBackup
@@ -37,7 +37,7 @@ export async function GET() {
       {
         status: 'error',
         db: 'disconnected',
-        site: 'candvisam.ro',
+        site: 'pagani.ro',
         timestamp,
         uptimeSeconds: Math.round(process.uptime()),
       },

@@ -8,7 +8,7 @@ type ImageEntry = MetadataRoute.Sitemap[number] & { images: string[] }
 
 export default async function sitemapImages(): Promise<MetadataRoute.Sitemap> {
   const { site, seoSettings } = await getRequiredCurrentSite()
-  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
   const dictionaryPath = site.dictionaryPath || '/dictionar'
 
   const [posts, symbols, media] = await Promise.all([

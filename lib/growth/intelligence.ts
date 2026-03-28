@@ -34,7 +34,7 @@ function normalizeText(input: string) {
 function normalizePath(input: string) {
   if (!input) return ''
   try {
-    const url = input.startsWith('http') ? new URL(input) : new URL(input, 'https://candvisam.ro')
+    const url = input.startsWith('http') ? new URL(input) : new URL(input, 'https://pagani.ro')
     return url.pathname.replace(/\/$/, '') || '/'
   } catch {
     return input.trim().replace(/^https?:\/\/[^/]+/i, '').replace(/\/$/, '') || ''

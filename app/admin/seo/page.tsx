@@ -163,7 +163,7 @@ export default function AdminSeoPage() {
 
   const effectiveRobots = useMemo(() => {
     if (!settings) return ''
-    return buildEffectiveRobots(settings.siteUrl || 'https://candvisam.ro', settings.robotsTxt || '', settings.blockAiBots)
+    return buildEffectiveRobots(settings.siteUrl || 'https://pagani.ro', settings.robotsTxt || '', settings.blockAiBots)
   }, [settings])
 
   const robotsWarnings = useMemo(() => validateRobots(effectiveRobots), [effectiveRobots])
@@ -234,7 +234,7 @@ export default function AdminSeoPage() {
   }
 
   if (!settings) return <div className="text-slate-300">Se incarca setarile...</div>
-  const siteUrl = (settings.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (settings.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
 
   return (
     <section className="space-y-6">

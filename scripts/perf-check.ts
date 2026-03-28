@@ -5,7 +5,7 @@ function stripHtml(input: string) {
 }
 
 function countInternalLinks(html: string) {
-  const matches = html.match(/<a[^>]+href=["'](\/|https?:\/\/(www\.)?candvisam\.ro)[^"']+["'][^>]*>/gi)
+  const matches = html.match(/<a[^>]+href=["'](\/|https?:\/\/(www\.)?pagani\.ro)[^"']+["'][^>]*>/gi)
   return matches ? matches.length : 0
 }
 

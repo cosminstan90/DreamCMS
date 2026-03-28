@@ -8,7 +8,7 @@ const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { site, seoSettings } = await getRequiredCurrentSite()
-  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://candvisam.ro').replace(/\/$/, '')
+  const siteUrl = (seoSettings?.siteUrl || site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
 
   const [posts, symbols, categories] = await Promise.all([
     prisma.post.findMany({

@@ -30,7 +30,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
           <div className="p-3 bg-[#8b5cf6]/15 rounded-full mb-4">
             <Moon className="w-10 h-10 text-[#8b5cf6]" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white mb-1">DreamCMS - candvisam.ro</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white mb-1">DreamCMS - pagani.ro</h1>
           <p className="text-slate-400 text-sm">Autentificare in panoul administrativ</p>
         </div>
 
@@ -47,7 +47,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
               name="email"
               required
               className="w-full bg-[#0f172a] border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#8b5cf6] focus:border-transparent transition"
-              placeholder="nume@candvisam.ro"
+              placeholder="nume@pagani.ro"
             />
           </div>
 

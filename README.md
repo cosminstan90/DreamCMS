@@ -1,4 +1,4 @@
-# DreamCMS pentru CandVisam.ro
+# DreamCMS pentru Pagani.ro
 
 Platforma CMS internÃƒâ€žÃ†â€™ construitÃƒâ€žÃ†â€™ folosind Next.js 14, Tailwind CSS, Prisma ÃƒË†Ã¢â€žÂ¢i MySQL.
 
@@ -12,7 +12,7 @@ Platforma CMS internÃƒâ€žÃ†â€™ construitÃƒâ€žÃ†â€™ f
 
 ## Deployment (CloudPanel Nginx)
 
-SetÃƒâ€žÃ†â€™ri necesare in Vhost Config din CloudPanel (pentru domeniu candvisam.ro):
+SetÃƒâ€žÃ†â€™ri necesare in Vhost Config din CloudPanel (pentru domeniu pagani.ro):
 
 ```nginx
 location / {
@@ -36,30 +36,30 @@ pm2 save
 - Pentru restore, copiaza `public/media/uploads` in acelasi loc si ruleaza `pm2 restart ecosystem.config.js`.
 
 ## Deploy (CloudPanel)
-1. Creeaza site candvisam.ro in CloudPanel (Node.js site, 20.x).
-2. SSH: git clone repo in /home/candvisam.ro/htdocs/dreamcms.
+1. Creeaza site pagani.ro in CloudPanel (Node.js site, 20.x).
+2. SSH: git clone repo in /home/pagani.ro/htdocs/dreamcms.
 3. Creeaza DB MySQL in CloudPanel, copiaza cred in .env.
 4. Ruleaza: npm install, npm run build, npx prisma migrate deploy, npm run db:seed.
 5. PM2: pm2 start ecosystem.config.js, pm2 save, pm2 startup.
 6. CloudPanel -> Vhost Config: proxy_pass la 127.0.0.1:3001.
-7. SSL: CloudPanel -> SSL/TLS -> Let\'s Encrypt -> candvisam.ro.
+7. SSL: CloudPanel -> SSL/TLS -> Let\'s Encrypt -> pagani.ro.
 8. Crontab backups:
-   0 2 * * * curl -s -H "X-Cron-Secret: TOKEN" https://candvisam.ro/api/backup/run?type=database
-   0 3 * * 0 curl -s -H "X-Cron-Secret: TOKEN" https://candvisam.ro/api/backup/run?type=media
-   0 4 1 * * curl -s -H "X-Cron-Secret: TOKEN" https://candvisam.ro/api/backup/run?type=full
+   0 2 * * * curl -s -H "X-Cron-Secret: TOKEN" https://pagani.ro/api/backup/run?type=database
+   0 3 * * 0 curl -s -H "X-Cron-Secret: TOKEN" https://pagani.ro/api/backup/run?type=media
+   0 4 1 * * curl -s -H "X-Cron-Secret: TOKEN" https://pagani.ro/api/backup/run?type=full
 
 ## Newsletter Digest Cron
 
-0 9 * * 1 curl -s -H 'X-Cron-Secret: TOKEN' https://candvisam.ro/api/newsletter/digest/run
+0 9 * * 1 curl -s -H 'X-Cron-Secret: TOKEN' https://pagani.ro/api/newsletter/digest/run
 
 
 ## Revenue Reporting Cron
 
 # Weekly revenue summary email (Monday 08:00)
-0 8 * * 1 curl -s -H 'X-Cron-Secret: TOKEN' https://candvisam.ro/api/reports/revenue/notify
+0 8 * * 1 curl -s -H 'X-Cron-Secret: TOKEN' https://pagani.ro/api/reports/revenue/notify
 
 # Daily threshold alerts check (every day 09:00)
-0 9 * * * curl -s -H 'X-Cron-Secret: TOKEN' https://candvisam.ro/api/reports/revenue/alerts
+0 9 * * * curl -s -H 'X-Cron-Secret: TOKEN' https://pagani.ro/api/reports/revenue/alerts
 
 Optional env thresholds:
 ALERT_MIN_AD_CTR=0.7

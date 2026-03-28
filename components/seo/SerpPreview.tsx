@@ -14,7 +14,7 @@ function truncateByPixels(text: string, maxPixels: number, pxPerChar = 9.5) {
 }
 
 export function SerpPreview({ title, slug, categorySlug, description }: SerpPreviewProps) {
-  const breadcrumb = `candvisam.ro ${categorySlug ? `> ${categorySlug}` : ''} > ${slug}`
+  const breadcrumb = `pagani.ro ${categorySlug ? `> ${categorySlug}` : ''} > ${slug}`
   const truncatedTitle = truncateByPixels(title, 600)
 
   return (

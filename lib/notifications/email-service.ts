@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY || ''
-const FROM_EMAIL = process.env.BREVO_FROM || 'no-reply@candvisam.ro'
+const FROM_EMAIL = process.env.BREVO_FROM || 'no-reply@pagani.ro'
 
 export async function sendEmail(to: string, subject: string, html: string) {
   if (!BREVO_API_KEY || !to) return

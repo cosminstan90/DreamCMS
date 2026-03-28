@@ -428,7 +428,7 @@ export function calculateGeoScore(post: PostLike, author?: AuthorLike): GeoResul
     details: dreamComplete ? 'Structura oneirica este bine acoperita' : 'Lipsesc blocuri specifice oneirice',
   })
   if (!dreamComplete) {
-    suggestions.push('Pentru candvisam.ro, combina QuickAnswerBlock cu DreamInterpretationBlock sau ProsConsMeaningBlock pentru structura completa.')
+    suggestions.push('Pentru pagani.ro, combina QuickAnswerBlock cu DreamInterpretationBlock sau ProsConsMeaningBlock pentru structura completa.')
   }
 
   const authorName = String(author?.name || '').trim()
