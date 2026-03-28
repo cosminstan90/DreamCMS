@@ -34,6 +34,7 @@ type HubTemplateProps = {
   keywords?: string[]
   relatedPosts: RelatedPost[]
   pagePath: string
+  sitePackKey?: string
 }
 
 export function HubTemplate({
@@ -49,10 +50,112 @@ export function HubTemplate({
   keywords = [],
   relatedPosts,
   pagePath,
+  sitePackKey,
 }: HubTemplateProps) {
   const safeHtml = prepareHtmlForRendering(contentHtml || '')
   const { minutes } = readingTimeFromHtml(safeHtml)
   const toc = extractH2FromHtml(safeHtml)
+  const dreamy = sitePackKey !== 'numarangelic'
+
+  if (!dreamy) {
+    return (
+      <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_#fff4de_0%,_#fff9ef_42%,_#fffdf9_100%)] text-[#4c2d12]">
+        <div className="mx-auto max-w-6xl px-6 py-12">
+          <nav className="mb-6 flex flex-wrap gap-2 text-sm text-[#b2721e]">
+            {breadcrumbs.map((item, index) => (
+              <span key={item.href}>
+                <Link href={item.href} className="hover:text-[#8a4b10]">
+                  {item.name}
+                </Link>
+                {index < breadcrumbs.length - 1 ? ' / ' : ''}
+              </span>
+            ))}
+          </nav>
+
+          <section className="rounded-[32px] border border-[#f1ddbc] bg-[linear-gradient(135deg,#fffdfa,#fff3df)] p-8">
+            <div className="text-xs uppercase tracking-[0.25em] text-[#b96b12]">Hub editorial</div>
+            <h1 className="mt-3 font-serif text-4xl leading-tight text-[#4c2d12] md:text-5xl">{title}</h1>
+            {excerpt && <p className="mt-4 max-w-3xl text-lg text-[#7c4810]">{excerpt}</p>}
+            <div className="mt-5 flex flex-wrap gap-3 text-sm text-[#7c4810]">
+              <span>{clusterName || 'Cluster principal'}</span>
+              <span>{authorName || 'Echipa Numar Angelic'}</span>
+              <span>{publishedAt ? new Date(publishedAt).toLocaleDateString('ro-RO') : ''}</span>
+              <span>{minutes} min citire</span>
+            </div>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-[#f3e0c4] bg-white/85 p-5">
+                <div className="text-xs uppercase tracking-wide text-[#b96b12]">Structura cluster</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {supportAngles.map((item) => (
+                    <span key={item} className="rounded-full border border-[#efcf9a] bg-white px-3 py-1 text-xs text-[#8a4b10]">{item}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-[#f3e0c4] bg-white/85 p-5">
+                <div className="text-xs uppercase tracking-wide text-[#b96b12]">Keywords prioritare</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {keywords.map((item) => (
+                    <span key={item} className="rounded-full border border-[#efcf9a] bg-white px-3 py-1 text-xs text-[#8a4b10]">{item}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {toc.length > 2 && (
+            <aside className="mt-8 rounded-[2rem] border border-[#f1ddbc] bg-white p-5">
+              <h2 className="mb-3 text-base font-semibold text-[#8a4b10]">Ce acopera acest hub</h2>
+              <ul className="space-y-2 text-sm text-[#7c4810]">
+                {toc.map((entry) => (
+                  <li key={entry.id}>
+                    <a href={`#${entry.id}`} className="hover:text-[#8a4b10]">
+                      {entry.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )}
+
+          <AuthorTrustCard
+            name={authorName}
+            slug={authorProfile?.slug}
+            headline={authorProfile?.headline}
+            bio={authorProfile?.bio}
+            credentials={authorProfile?.credentials}
+            methodology={authorProfile?.methodology}
+            expertise={authorProfile?.expertise || []}
+            trustStatement={authorProfile?.trustStatement}
+          />
+
+          <article className="prose prose-lg mt-10 max-w-none prose-headings:font-serif prose-headings:text-[#4c2d12] prose-a:text-[#c26c12] prose-strong:text-[#5b3411]" dangerouslySetInnerHTML={{ __html: safeHtml }} />
+
+          <MonetizationDisclosure hasAds hasAffiliate={false} />
+          <NewsletterCta sourcePath={pagePath} variantStyle="angelic" title="Primeste hub-uri noi si ghiduri cu intentie mare" subtitle="Trimitem continut nou pentru iubire, twin flame, bani, manifestare si secvente numerice recurente." />
+
+          {relatedPosts.length > 0 && (
+            <section className="mt-14">
+              <h2 className="mb-4 font-serif text-2xl text-[#4c2d12]">Pagini suport din acest cluster</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                {relatedPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/${post.category?.slug || ''}/${post.slug}`}
+                    className="rounded-[2rem] border border-[#f1ddbc] bg-white p-4 transition-colors hover:border-[#efbf71]"
+                  >
+                    <div className="mb-1 text-sm text-[#b2721e]">{post.category?.name || 'Ghid suport'}</div>
+                    <div className="font-semibold text-[#5b3411]">{post.title}</div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-[#fefdf8] text-[#2c2240]">
@@ -129,7 +232,7 @@ export function HubTemplate({
         <article className="prose prose-lg mt-10 max-w-none prose-headings:text-[#2f2050] prose-a:text-[#4f35a1] prose-strong:text-[#34255b]" dangerouslySetInnerHTML={{ __html: safeHtml }} />
 
         <MonetizationDisclosure hasAds hasAffiliate={false} />
-        <NewsletterCta sourcePath={pagePath} />
+        <NewsletterCta sourcePath={pagePath} variantStyle="dreamy" />
 
         {relatedPosts.length > 0 && (
           <section className="mt-14">

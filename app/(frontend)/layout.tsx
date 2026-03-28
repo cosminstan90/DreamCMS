@@ -5,12 +5,14 @@ import { WebVitalsTracker } from '@/components/analytics/WebVitalsTracker'
 import { ClientErrorTracker } from '@/components/analytics/ClientErrorTracker'
 import { PublicSiteShell } from '@/components/frontend/PublicSiteShell'
 import { generateSiteSchemas } from '@/lib/seo/site-schema'
+import { getFrontendTemplatePack } from '@/lib/sites/frontend-registry'
 import { resolveCurrentSite } from '@/lib/sites/resolver'
 
 export const dynamic = 'force-dynamic'
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
   const { site, sitePack, adsConfig } = await resolveCurrentSite()
+  const frontendTemplate = getFrontendTemplatePack(sitePack.key)
   let categories: Array<{ id: string; name: string; slug: string }> = []
 
   try {
@@ -48,6 +50,7 @@ export default async function FrontendLayout({ children }: { children: React.Rea
         dictionaryPath={site.dictionaryPath || sitePack.routes.dictionaryPath}
         dictionaryLabel="Dictionar A-Z"
         searchLabel={sitePack.labels.searchCta}
+        variant={frontendTemplate.shellVariant}
       >
         {children}
       </PublicSiteShell>

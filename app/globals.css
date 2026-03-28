@@ -18,6 +18,26 @@ body {
   font-family: var(--font-geist-sans), 'Segoe UI', sans-serif;
 }
 
+@keyframes homepageFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes homepageRevealUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .dreamcms-block {
   margin: 1.25rem 0;
   border: 1px solid #d8ccf2;
@@ -126,5 +146,15 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .homepage-float {
+    animation: homepageFloat 9s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .homepage-reveal-up {
+    opacity: 0;
+    animation: homepageRevealUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 }

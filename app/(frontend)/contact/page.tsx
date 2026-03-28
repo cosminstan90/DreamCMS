@@ -1,17 +1,24 @@
 import type { Metadata } from 'next'
 import { StaticPageShell } from '@/components/frontend/StaticPageShell'
+import { getCurrentSiteBranding } from '@/lib/sites/resolver'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Date de contact pentru echipa editoriala Cand Visam.',
+  description: 'Date de contact pentru echipa editoriala.',
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const branding = await getCurrentSiteBranding()
+  const dreamy = branding.sitePack.key !== 'numarangelic'
+
   return (
     <StaticPageShell
+      variant={dreamy ? 'dreamy' : 'angelic'}
       eyebrow="Contact"
       title="Contact"
-      intro="Pentru intrebari editoriale, corectii, colaborari sau semnalari legate de continut, foloseste canalele de mai jos."
+      intro={dreamy
+        ? 'Pentru intrebari editoriale, corectii, colaborari sau semnalari legate de continut, foloseste canalele de mai jos.'
+        : 'Pentru intrebari editoriale, colaborari, publicitate sau semnalari legate de interpretari si continut, foloseste canalele de mai jos.'}
     >
       <p><strong>Email editorial:</strong> contact@candvisam.ro</p>
       <p><strong>Subiecte recomandate:</strong> corectii de continut, propuneri de colaborare, publicitate, sesizari privind drepturi sau date personale.</p>

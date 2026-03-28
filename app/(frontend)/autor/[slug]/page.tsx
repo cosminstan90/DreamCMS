@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
@@ -55,6 +55,7 @@ export default async function AuthorProfilePage({ params }: { params: { slug: st
   if (!author) return notFound()
 
   const branding = await getCurrentSiteBranding()
+  const dreamy = branding.sitePack.key !== 'numarangelic'
 
   const schema = {
     '@context': 'https://schema.org',
@@ -63,6 +64,68 @@ export default async function AuthorProfilePage({ params }: { params: { slug: st
     description: author.bio || author.headline || undefined,
     knowsAbout: Array.isArray(author.expertise) ? author.expertise : [],
     url: `${branding.siteUrl}/autor/${author.slug}`,
+  }
+
+  if (!dreamy) {
+    return (
+      <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_#fff4de_0%,_#fff9ef_42%,_#fffdf9_100%)] px-6 py-12 text-[#4c2d12]">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+        <div className="mx-auto max-w-5xl">
+          <nav className="mb-6 text-sm text-[#b2721e]">
+            <Link href="/" className="hover:text-[#8a4b10]">Acasa</Link> / <Link href="/autori" className="hover:text-[#8a4b10]">Autori</Link> / {author.name}
+          </nav>
+
+          <section className="rounded-[32px] border border-[#f1ddbc] bg-[linear-gradient(135deg,#fffdfa,#fff3df)] p-8">
+            <div className="text-xs uppercase tracking-[0.25em] text-[#b96b12]">Profil public autor</div>
+            <h1 className="mt-3 font-serif text-4xl text-[#4c2d12] md:text-5xl">{author.name}</h1>
+            {author.headline && <p className="mt-4 text-lg text-[#7c4810]">{author.headline}</p>}
+            {author.credentials && <p className="mt-4 rounded-2xl border border-[#f3e0c4] bg-white/80 p-4 text-sm text-[#7c4810]">{author.credentials}</p>}
+            {Array.isArray(author.expertise) && author.expertise.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {(author.expertise as string[]).map((item) => (
+                  <span key={item} className="rounded-full border border-[#efcf9a] bg-white px-3 py-1 text-xs text-[#8a4b10]">{item}</span>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {author.bio && (
+              <section className="rounded-[2rem] border border-[#f1ddbc] bg-white p-6">
+                <h2 className="text-xl font-semibold text-[#5b3411]">Despre autor</h2>
+                <p className="mt-3 text-sm leading-7 text-[#7c4810]">{author.bio}</p>
+              </section>
+            )}
+            {author.methodology && (
+              <section className="rounded-[2rem] border border-[#f1ddbc] bg-white p-6">
+                <h2 className="text-xl font-semibold text-[#5b3411]">Metodologie editoriala</h2>
+                <p className="mt-3 text-sm leading-7 text-[#7c4810]">{author.methodology}</p>
+              </section>
+            )}
+          </div>
+
+          {author.trustStatement && (
+            <section className="mt-6 rounded-[2rem] border border-[#f1ddbc] bg-white p-6">
+              <h2 className="text-xl font-semibold text-[#5b3411]">Trust statement</h2>
+              <p className="mt-3 text-sm leading-7 text-[#7c4810]">{author.trustStatement}</p>
+            </section>
+          )}
+
+          <section className="mt-10">
+            <h2 className="mb-4 font-serif text-2xl text-[#4c2d12]">Ghiduri publicate</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {author.posts.map((post) => (
+                <Link key={post.id} href={`/${post.category?.slug || ''}/${post.slug}`} className="rounded-[2rem] border border-[#f1ddbc] bg-white p-5 transition-colors hover:border-[#efbf71]">
+                  <div className="text-xs text-[#b2721e]">{post.category?.name || 'Ghid'} {post.publishedAt ? `| ${new Date(post.publishedAt).toLocaleDateString('ro-RO')}` : ''}</div>
+                  <div className="mt-2 text-lg font-semibold text-[#5b3411]">{post.title}</div>
+                  {post.excerpt && <p className="mt-2 text-sm text-[#7c4810]">{post.excerpt}</p>}
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
+    )
   }
 
   return (

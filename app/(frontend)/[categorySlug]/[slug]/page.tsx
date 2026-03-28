@@ -1,4 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
@@ -190,6 +190,7 @@ export default async function CategoryArticlePage({ params }: { params: { catego
     </>
   )
 }
+
 
 
 

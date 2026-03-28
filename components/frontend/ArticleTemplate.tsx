@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import Image from 'next/image'
 import { prepareHtmlForRendering, extractH2FromHtml, readingTimeFromHtml } from '@/lib/frontend/content'
 import { getAllowedDataNodesForSitePack } from '@/lib/sites/blocks'
@@ -109,14 +109,194 @@ export function ArticleTemplate(props: ArticleTemplateProps) {
   const h2List = extractH2FromHtml(safeHtml)
   const canRenderAds = words >= adsConfig.minWordsForAds
   const { top, bottom } = splitHtmlAtMiddleParagraph(safeHtml)
+  const dreamy = sitePackKey !== 'numarangelic'
+
+  if (dreamy) {
+    return (
+      <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#f7f0ff_0%,_#fefdf8_34%,_#fcf8f2_100%)] text-[#2c2240]">
+        <div className="mx-auto max-w-6xl px-6 py-10 md:py-14">
+          <nav className="mb-8 flex flex-wrap gap-2 text-xs uppercase tracking-[0.18em] text-[#8a74aa]">
+            {breadcrumbs.map((item, index) => (
+              <span key={item.href}>
+                <Link href={item.href} className="hover:text-[#47306f]">
+                  {item.name}
+                </Link>
+                {index < breadcrumbs.length - 1 ? ' / ' : ''}
+              </span>
+            ))}
+          </nav>
+
+          <section className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(280px,0.42fr)] lg:items-start">
+            <div>
+              <div className="mb-4 inline-flex rounded-full border border-[#ded1f5] bg-white/75 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[#7b67a5] backdrop-blur">
+                lectura ghidata
+              </div>
+              <h1 className="max-w-4xl font-serif text-4xl leading-[0.95] text-[#2f2050] md:text-6xl">
+                {title}
+              </h1>
+              {excerpt && <p className="mt-5 max-w-2xl text-lg leading-8 text-[#5f4b80]">{excerpt}</p>}
+
+              <div className="mt-8 flex flex-wrap gap-4 text-sm text-[#6a5a93]">
+                <span>{authorName || 'Echipa Cand Visam'}</span>
+                <span>{publishedAt ? new Date(publishedAt).toLocaleDateString() : ''}</span>
+                <span>{minutes} min citire</span>
+              </div>
+            </div>
+
+            <aside className="rounded-[2rem] border border-[#e6daf7] bg-white/70 p-6 backdrop-blur">
+              {speakableSections.length > 0 && (
+                <>
+                  <div className="mb-3 text-xs uppercase tracking-[0.24em] text-[#8b74ac]">Repere rapide</div>
+                  <div className="flex flex-wrap gap-2">
+                    {speakableSections.slice(0, 6).map((section) => (
+                      <span key={section} className="rounded-full border border-[#d7caef] bg-white px-3 py-1 text-xs text-[#5f4b80]">
+                        {section}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+              <div className={speakableSections.length > 0 ? 'mt-5 border-t border-[#e9e0f8] pt-5' : ''}>
+                <AuthorTrustCard
+                  name={authorName}
+                  slug={authorProfile?.slug}
+                  headline={authorProfile?.headline}
+                  bio={authorProfile?.bio}
+                  credentials={authorProfile?.credentials}
+                  methodology={authorProfile?.methodology}
+                  expertise={authorProfile?.expertise || []}
+                  trustStatement={authorProfile?.trustStatement}
+                />
+              </div>
+            </aside>
+          </section>
+
+          {(directAnswer || llmSummary) && (
+            <section className="mt-8 rounded-[2rem] border border-[#dfd2f7] bg-white/85 p-6 backdrop-blur">
+              <div className="mb-2 text-xs uppercase tracking-[0.22em] text-[#7b67a5]">Interpretare rapida</div>
+              {directAnswer && <p className="max-w-3xl text-lg font-medium leading-8 text-[#2f2050]">{directAnswer}</p>}
+              {llmSummary && <p className="mt-3 max-w-3xl text-sm leading-7 text-[#5f4b80]">{llmSummary}</p>}
+            </section>
+          )}
+
+          {featuredImage?.url && (
+            <div className="mt-8 overflow-hidden rounded-[2.3rem] border border-[#ebe2f7] bg-white/70 shadow-[0_24px_80px_rgba(80,54,128,0.1)]">
+              <Image
+                src={featuredImage.url}
+                alt={featuredImage.altText || title}
+                width={featuredImage.width || 1200}
+                height={featuredImage.height || 630}
+                priority
+                className="h-auto w-full object-cover"
+              />
+            </div>
+          )}
+
+          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(260px,0.18fr)]">
+            <div>
+              {canRenderAds && (
+                <div className="mb-8">
+                  <AdSlot config={adsConfig} route="article" slotKey="inContent1" pagePath={pagePath} />
+                </div>
+              )}
+
+              <article className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#2f2050] prose-p:leading-8 prose-a:text-[#4f35a1] prose-strong:text-[#34255b]" dangerouslySetInnerHTML={{ __html: top }} />
+
+              {canRenderAds && bottom && (
+                <div className="mt-10">
+                  <AdSlot config={adsConfig} route="article" slotKey="inContent2" pagePath={pagePath} label="Pauza scurta in lectura" />
+                </div>
+              )}
+
+              {bottom && <article className="prose prose-lg mt-10 max-w-none prose-headings:font-serif prose-headings:text-[#2f2050] prose-p:leading-8 prose-a:text-[#4f35a1] prose-strong:text-[#34255b]" dangerouslySetInnerHTML={{ __html: bottom }} />}
+            </div>
+
+            <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+              {h2List.length > 3 && (
+                <div className="rounded-[1.8rem] border border-[#e7def5] bg-white/80 p-5 backdrop-blur">
+                  <h2 className="mb-3 text-base font-semibold text-[#3f2b63]">Cuprins</h2>
+                  <ul className="space-y-2 text-sm text-[#5f4b80]">
+                    {h2List.map((entry) => (
+                      <li key={entry.id}>
+                        <a href={`#${entry.id}`} className="hover:text-[#3f2b63]">
+                          {entry.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="rounded-[1.8rem] border border-[#e7def5] bg-[linear-gradient(180deg,#fffdfa,#faf5ff)] p-5">
+                <div className="mb-3 text-[11px] uppercase tracking-[0.22em] text-[#8a74aa]">dupa aceasta pagina</div>
+                <div className="space-y-3 text-sm leading-7 text-[#5f4b80]">
+                  <div>1. Salveaza ideea centrala din raspunsul direct.</div>
+                  <div>2. Continua cu un simbol recurent din vis.</div>
+                  <div>3. Aboneaza-te pentru urmatoarele interpretari relevante.</div>
+                </div>
+                {backToCategoryHref && (
+                  <Link href={backToCategoryHref} className="mt-4 inline-flex text-sm font-medium text-[#4f35a1] hover:text-[#35246f]">
+                    Vezi mai multe din categorie
+                  </Link>
+                )}
+              </div>
+
+              <MonetizationDisclosure hasAffiliate={affiliateProducts.length > 0} hasAds={canRenderAds} />
+            </aside>
+          </div>
+
+          <div className="mt-12">
+            <RecommendedProducts products={affiliateProducts} pagePath={pagePath} templateType="article" />
+          </div>
+
+          <div className="mt-12">
+            <NewsletterCta sourcePath={pagePath} variantStyle={dreamy ? 'dreamy' : 'angelic'} />
+          </div>
+
+          {canRenderAds && (
+            <div className="mt-10">
+              <AdSlot config={adsConfig} route="article" slotKey="footer" pagePath={pagePath} />
+            </div>
+          )}
+
+          {relatedPosts.length > 0 && (
+            <section className="mt-16">
+              <div className="mb-5 text-xs uppercase tracking-[0.22em] text-[#8a74aa]">Mai departe</div>
+              <h2 className="font-serif text-3xl text-[#2f2050]">{relatedTitle}</h2>
+              <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
+                {relatedPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/${post.category?.slug || ''}/${post.slug}`}
+                    className="border-t border-[#e6daf7] pt-4 transition-colors hover:border-[#c9b5ea]"
+                  >
+                    <div className="mb-1 text-sm text-[#7b67a5]">{post.category?.name || 'Articol'}</div>
+                    <div className="font-semibold text-[#2f2050]">{post.title}</div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {backToCategoryHref && (
+            <div className="mt-10">
+              <Link href={backToCategoryHref} className="font-medium text-[#4f35a1] hover:text-[#35246f]">
+                Inapoi la categorie
+              </Link>
+            </div>
+          )}
+        </div>
+      </main>
+    )
+  }
 
   return (
-    <main className="min-h-screen bg-[#fefdf8] text-[#2c2240]">
-      <div className="mx-auto max-w-5xl px-6 py-12">
-        <nav className="mb-6 flex flex-wrap gap-2 text-sm text-[#6f5a92]">
+    <main className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_#fff4de_0%,_#fff9ef_42%,_#fffdf9_100%)] text-[#4c2d12]">
+      <div className="mx-auto max-w-6xl px-6 py-10 md:py-14">
+        <nav className="mb-8 flex flex-wrap gap-2 text-xs uppercase tracking-[0.18em] text-[#b2721e]">
           {breadcrumbs.map((item, index) => (
             <span key={item.href}>
-              <Link href={item.href} className="hover:text-[#47306f]">
+              <Link href={item.href} className="hover:text-[#8a4b10]">
                 {item.name}
               </Link>
               {index < breadcrumbs.length - 1 ? ' / ' : ''}
@@ -124,112 +304,157 @@ export function ArticleTemplate(props: ArticleTemplateProps) {
           ))}
         </nav>
 
-        <h1 className="text-4xl font-semibold leading-tight text-[#2f2050] md:text-5xl">{title}</h1>
-        {excerpt && <p className="mt-4 max-w-3xl text-lg text-[#5f4b80]">{excerpt}</p>}
+        <section className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(280px,0.42fr)] lg:items-start">
+          <div>
+            <div className="mb-4 inline-flex rounded-full border border-[#f1d8ae] bg-white/90 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[#b96b12] backdrop-blur">
+              ghid spiritual
+            </div>
+            <h1 className="max-w-4xl font-serif text-4xl leading-[0.95] text-[#4c2d12] md:text-6xl">
+              {title}
+            </h1>
+            {excerpt && <p className="mt-5 max-w-2xl text-lg leading-8 text-[#7c4810]">{excerpt}</p>}
 
-        <div className="mt-6 flex flex-wrap gap-4 text-sm text-[#5f4b80]">
-          <span>{authorName || 'Echipa Cand Visam'}</span>
-          <span>{publishedAt ? new Date(publishedAt).toLocaleDateString() : ''}</span>
-          <span>{minutes} min citire</span>
-        </div>
-
-        <AuthorTrustCard
-          name={authorName}
-          slug={authorProfile?.slug}
-          headline={authorProfile?.headline}
-          bio={authorProfile?.bio}
-          credentials={authorProfile?.credentials}
-          methodology={authorProfile?.methodology}
-          expertise={authorProfile?.expertise || []}
-          trustStatement={authorProfile?.trustStatement}
-        />
-
-        {(directAnswer || llmSummary) && (
-          <section className="mt-6 rounded-2xl border border-[#d8c9f5] bg-white p-5">
-            <div className="mb-2 text-xs uppercase tracking-wide text-[#7b67a5]">Interpretare rapida</div>
-            {directAnswer && <p className="text-base font-medium text-[#2f2050]">{directAnswer}</p>}
-            {llmSummary && <p className="mt-2 text-sm text-[#5f4b80]">{llmSummary}</p>}
-          </section>
-        )}
-
-        {speakableSections.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {speakableSections.slice(0, 6).map((section) => (
-              <span key={section} className="rounded-full border border-[#d7caef] bg-white px-3 py-1 text-xs text-[#5f4b80]">
-                {section}
-              </span>
-            ))}
+            <div className="mt-8 flex flex-wrap gap-4 text-sm text-[#9a5a15]">
+              <span>{authorName || 'Echipa Numar Angelic'}</span>
+              <span>{publishedAt ? new Date(publishedAt).toLocaleDateString() : ''}</span>
+              <span>{minutes} min citire</span>
+            </div>
           </div>
-        )}
 
-        {canRenderAds && (
-          <div className="mt-6">
-            <AdSlot config={adsConfig} route="article" slotKey="inContent1" pagePath={pagePath} />
-          </div>
-        )}
+          <aside className="rounded-[2rem] border border-[#f1ddbc] bg-white/80 p-6 backdrop-blur">
+            {(directAnswer || llmSummary) && (
+              <div>
+                <div className="mb-3 text-xs uppercase tracking-[0.24em] text-[#b96b12]">raspuns rapid</div>
+                {directAnswer && <p className="text-base font-medium leading-7 text-[#5b3411]">{directAnswer}</p>}
+                {llmSummary && <p className="mt-3 text-sm leading-7 text-[#7c4810]">{llmSummary}</p>}
+              </div>
+            )}
+            <div className={directAnswer || llmSummary ? 'mt-5 border-t border-[#f3e0c4] pt-5' : ''}>
+              <AuthorTrustCard
+                name={authorName}
+                slug={authorProfile?.slug}
+                headline={authorProfile?.headline}
+                bio={authorProfile?.bio}
+                credentials={authorProfile?.credentials}
+                methodology={authorProfile?.methodology}
+                expertise={authorProfile?.expertise || []}
+                trustStatement={authorProfile?.trustStatement}
+              />
+            </div>
+          </aside>
+        </section>
 
         {featuredImage?.url && (
-          <div className="mt-8 overflow-hidden rounded-3xl border border-[#e6dff2] bg-white">
+          <div className="mt-8 overflow-hidden rounded-[2.3rem] border border-[#f1ddbc] bg-white/70 shadow-[0_24px_80px_rgba(191,118,28,0.1)]">
             <Image
               src={featuredImage.url}
               alt={featuredImage.altText || title}
               width={featuredImage.width || 1200}
               height={featuredImage.height || 630}
               priority
-              className="h-auto w-full"
+              className="h-auto w-full object-cover"
             />
           </div>
         )}
 
-        {h2List.length > 3 && (
-          <aside className="mt-10 rounded-2xl border border-[#e7def5] bg-white/80 p-5">
-            <h2 className="mb-3 text-base font-semibold text-[#3f2b63]">Cuprins</h2>
-            <ul className="space-y-2 text-sm text-[#5f4b80]">
-              {h2List.map((entry) => (
-                <li key={entry.id}>
-                  <a href={`#${entry.id}`} className="hover:text-[#3f2b63]">
-                    {entry.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </aside>
-        )}
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(260px,0.18fr)]">
+          <div>
+            {canRenderAds && (
+              <div className="mb-8">
+                <AdSlot config={adsConfig} route="article" slotKey="inContent1" pagePath={pagePath} label="Descoperire sustinuta" />
+              </div>
+            )}
 
-        <article className="prose prose-lg mt-10 max-w-none prose-headings:text-[#2f2050] prose-a:text-[#4f35a1] prose-strong:text-[#34255b]" dangerouslySetInnerHTML={{ __html: top }} />
+            <article className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-[#4c2d12] prose-p:leading-8 prose-a:text-[#c26c12] prose-strong:text-[#5b3411]" dangerouslySetInnerHTML={{ __html: top }} />
 
-        {canRenderAds && bottom && (
-          <div className="mt-8">
-            <AdSlot config={adsConfig} route="article" slotKey="inContent2" pagePath={pagePath} />
+            {canRenderAds && bottom && (
+              <div className="mt-10">
+                <AdSlot config={adsConfig} route="article" slotKey="inContent2" pagePath={pagePath} label="Resurse sponsorizate" />
+              </div>
+            )}
+
+            {bottom && <article className="prose prose-lg mt-10 max-w-none prose-headings:font-serif prose-headings:text-[#4c2d12] prose-p:leading-8 prose-a:text-[#c26c12] prose-strong:text-[#5b3411]" dangerouslySetInnerHTML={{ __html: bottom }} />}
           </div>
-        )}
 
-        {bottom && <article className="prose prose-lg mt-8 max-w-none prose-headings:text-[#2f2050] prose-a:text-[#4f35a1] prose-strong:text-[#34255b]" dangerouslySetInnerHTML={{ __html: bottom }} />}
+          <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+            {h2List.length > 3 && (
+              <div className="rounded-[1.8rem] border border-[#f1ddbc] bg-white/85 p-5 backdrop-blur">
+                <h2 className="mb-3 text-base font-semibold text-[#8a4b10]">Pe scurt</h2>
+                <ul className="space-y-2 text-sm text-[#7c4810]">
+                  {h2List.map((entry) => (
+                    <li key={entry.id}>
+                      <a href={`#${entry.id}`} className="hover:text-[#8a4b10]">
+                        {entry.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-        <MonetizationDisclosure hasAffiliate={affiliateProducts.length > 0} hasAds={canRenderAds} />
+            {speakableSections.length > 0 && (
+              <div className="rounded-[1.8rem] border border-[#f1ddbc] bg-white/80 p-5 backdrop-blur">
+                <div className="mb-3 text-xs uppercase tracking-[0.22em] text-[#b96b12]">zone citabile</div>
+                <div className="flex flex-wrap gap-2">
+                  {speakableSections.slice(0, 6).map((section) => (
+                    <span key={section} className="rounded-full border border-[#efcf9a] bg-white px-3 py-1 text-xs text-[#8a4b10]">
+                      {section}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
-        <NewsletterCta sourcePath={pagePath} />
+            <div className="rounded-[1.8rem] border border-[#f1ddbc] bg-[linear-gradient(180deg,#fffdfa,#fff5e6)] p-5">
+              <div className="mb-3 text-[11px] uppercase tracking-[0.22em] text-[#b96b12]">ce faci mai departe</div>
+              <div className="space-y-3 text-sm leading-7 text-[#7c4810]">
+                <div>1. Pastreaza semnificatia centrala care ti se potriveste acum.</div>
+                <div>2. Continua cu o secventa sau un ghid mai specific intentiei tale.</div>
+                <div>3. Aboneaza-te pentru alte interpretari cu valoare practica.</div>
+              </div>
+              {backToCategoryHref && (
+                <Link href={backToCategoryHref} className="mt-4 inline-flex text-sm font-medium text-[#c26c12] hover:text-[#8a4b10]">
+                  Vezi mai multe din categorie
+                </Link>
+              )}
+            </div>
 
-        <RecommendedProducts products={affiliateProducts} pagePath={pagePath} templateType="article" />
+            <MonetizationDisclosure hasAffiliate={affiliateProducts.length > 0} hasAds={canRenderAds} />
+          </aside>
+        </div>
+
+        <div className="mt-12">
+          <RecommendedProducts products={affiliateProducts} pagePath={pagePath} templateType="article" title="Recomandari utile dupa acest ghid" />
+        </div>
+
+        <div className="mt-12">
+          <NewsletterCta
+            sourcePath={pagePath}
+            variantStyle="angelic"
+            title="Primeste noi interpretari pentru numerele si semnele care revin"
+            subtitle="Trimitem ghiduri noi pentru iubire, twin flame, manifestare si secvente numerice cu intentie mare."
+          />
+        </div>
 
         {canRenderAds && (
-          <div className="mt-8">
+          <div className="mt-10">
             <AdSlot config={adsConfig} route="article" slotKey="footer" pagePath={pagePath} />
           </div>
         )}
 
         {relatedPosts.length > 0 && (
-          <section className="mt-14">
-            <h2 className="mb-4 text-2xl font-semibold text-[#2f2050]">{relatedTitle}</h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <section className="mt-16">
+            <div className="mb-5 text-xs uppercase tracking-[0.22em] text-[#b96b12]">continua explorarea</div>
+            <h2 className="font-serif text-3xl text-[#4c2d12]">{relatedTitle}</h2>
+            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
               {relatedPosts.map((post) => (
                 <Link
                   key={post.id}
                   href={`/${post.category?.slug || ''}/${post.slug}`}
-                  className="rounded-2xl border border-[#e6dff2] bg-white p-4 transition-colors hover:border-[#c9b5ea]"
+                  className="border-t border-[#f0dbc0] pt-4 transition-colors hover:border-[#efbf71]"
                 >
-                  <div className="mb-1 text-sm text-[#7b67a5]">{post.category?.name || 'Articol'}</div>
-                  <div className="font-semibold text-[#2f2050]">{post.title}</div>
+                  <div className="mb-1 text-sm text-[#b2721e]">{post.category?.name || 'Ghid'}</div>
+                  <div className="font-semibold text-[#5b3411]">{post.title}</div>
                 </Link>
               ))}
             </div>
@@ -238,7 +463,7 @@ export function ArticleTemplate(props: ArticleTemplateProps) {
 
         {backToCategoryHref && (
           <div className="mt-10">
-            <Link href={backToCategoryHref} className="font-medium text-[#4f35a1] hover:text-[#35246f]">
+            <Link href={backToCategoryHref} className="font-medium text-[#c26c12] hover:text-[#8a4b10]">
               Inapoi la categorie
             </Link>
           </div>
@@ -247,5 +472,3 @@ export function ArticleTemplate(props: ArticleTemplateProps) {
     </main>
   )
 }
-
-

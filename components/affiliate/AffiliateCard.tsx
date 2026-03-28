@@ -1,4 +1,4 @@
-﻿/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
 
 type AffiliateCardProps = {
@@ -18,15 +18,22 @@ export function AffiliateCard(props: AffiliateCardProps) {
   const target = `/api/affiliate/click/${id}?to=${encodeURIComponent(affiliateUrl)}&page=${encodeURIComponent(pagePath)}&template=${encodeURIComponent(templateType)}`
 
   return (
-    <article className="rounded-2xl border border-[#e4daf5] bg-white p-4">
-      {badge && <div className="mb-2 inline-flex rounded-full bg-[#f2ebff] px-2 py-1 text-xs text-[#5b4694]">{badge}</div>}
-      {image && <img src={image} alt={title} className="mb-3 h-40 w-full rounded-xl object-cover" loading="lazy" />}
-      <h3 className="font-semibold text-[#2f2050]">{title}</h3>
-      {merchant && <div className="mt-1 text-xs text-[#6f5a92]">{merchant}</div>}
-      {priceText && <div className="mt-2 text-sm font-medium text-[#3f2b63]">{priceText}</div>}
-      <Link href={target} rel="nofollow sponsored noopener" target="_blank" className="mt-3 inline-flex rounded-lg bg-[#8b5cf6] px-3 py-2 text-sm text-white hover:bg-[#7c3aed]">
-        Vezi oferta
-      </Link>
+    <article className="group overflow-hidden rounded-[1.9rem] border border-[#e4daf5] bg-[linear-gradient(180deg,#ffffff,#faf5ff)] p-4 shadow-[0_18px_50px_rgba(84,56,128,0.05)] transition-transform duration-300 hover:-translate-y-1">
+      {image && <img src={image} alt={title} className="mb-4 h-44 w-full rounded-[1.3rem] object-cover" loading="lazy" />}
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          {badge && <div className="mb-2 inline-flex rounded-full border border-[#ddd1f7] bg-[#f6f1ff] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[#6a56a3]">{badge}</div>}
+          <h3 className="font-semibold leading-7 text-[#2f2050]">{title}</h3>
+        </div>
+      </div>
+      {merchant && <div className="mt-2 text-xs uppercase tracking-[0.16em] text-[#8a74aa]">{merchant}</div>}
+      {priceText && <div className="mt-3 text-sm font-medium text-[#3f2b63]">{priceText}</div>}
+      <div className="mt-4 flex items-center justify-between gap-4 border-t border-[#ece4fa] pt-4">
+        <div className="text-xs leading-6 text-[#6f5a92]">Selectie relevanta pentru cititoarele care vor un pas urmator practic.</div>
+        <Link href={target} rel="nofollow sponsored noopener" target="_blank" className="inline-flex shrink-0 rounded-full bg-[#8b5cf6] px-4 py-2 text-sm text-white transition-colors hover:bg-[#7c3aed]">
+          Vezi oferta
+        </Link>
+      </div>
     </article>
   )
 }

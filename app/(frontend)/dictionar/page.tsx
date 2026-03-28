@@ -1,9 +1,10 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next'
 import { DictionaryTemplate } from '@/components/frontend/DictionaryTemplate'
 import { prisma } from '@/lib/prisma'
 import { buildMetadata } from '@/lib/frontend/metadata'
 import { mergeAdsConfig } from '@/lib/ads/config'
+import { getFrontendTemplatePack } from '@/lib/sites/frontend-registry'
 import { getCurrentSiteBranding, resolveCurrentSite } from '@/lib/sites/resolver'
 
 export const revalidate = 3600
@@ -53,6 +54,7 @@ export default async function DictionaryIndexPage() {
   }
 
   const branding = await getCurrentSiteBranding()
+  const frontendTemplate = getFrontendTemplatePack(branding.sitePack.key)
   const siteUrl = branding.siteUrl.replace(/\/$/, '')
   const dictionaryPath = branding.dictionaryPath || '/dictionar'
   const adsConfig = mergeAdsConfig(settings?.adsConfig || branding.adsConfig)
@@ -85,7 +87,13 @@ export default async function DictionaryIndexPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogSchema) }} />
-      <DictionaryTemplate letterCounts={letterCounts} featuredSymbols={featuredSymbols} adsConfig={adsConfig} pagePath={dictionaryPath} />
+      <DictionaryTemplate
+        letterCounts={letterCounts}
+        featuredSymbols={featuredSymbols}
+        adsConfig={adsConfig}
+        pagePath={dictionaryPath}
+        variant={frontendTemplate.dictionaryVariant}
+      />
     </>
   )
 }
