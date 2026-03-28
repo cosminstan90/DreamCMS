@@ -108,7 +108,7 @@ export default async function HomePage() {
           <h2 className="mb-4 text-2xl font-semibold text-[#2f2050]">{section.title || 'Ultimele articole'}</h2>
           {section.subtitle && <p className="mb-4 text-sm text-[#5f4b80]">{section.subtitle}</p>}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {posts.map((post) => (
+            {posts.map((post: any) => (
               <Link key={post.id} href={`/${post.category?.slug || ''}/${post.slug}`} className="rounded-2xl border border-[#e2d7fa] bg-white p-5 hover:border-[#bea8e8]">
                 <div className="mb-1 text-xs text-[#7a67a4]">{post.category?.name || 'Articol'}</div>
                 <div className="font-semibold text-[#34255b]">{post.title}</div>
@@ -127,7 +127,7 @@ export default async function HomePage() {
           <h2 className="mb-4 text-2xl font-semibold text-[#2f2050]">{section.title || 'Categorii'}</h2>
           {section.subtitle && <p className="mb-4 text-sm text-[#5f4b80]">{section.subtitle}</p>}
           <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
+            {categories.map((category: any) => (
               <Link key={category.id} href={`/${category.slug}`} className="rounded-xl border border-[#e2d7fa] bg-white px-4 py-2 hover:border-[#bea8e8]">
                 {category.name}
               </Link>
@@ -144,7 +144,7 @@ export default async function HomePage() {
           <h2 className="mb-4 text-2xl font-semibold text-[#2f2050]">{section.title || 'Featured symbols'}</h2>
           {section.subtitle && <p className="mb-4 text-sm text-[#5f4b80]">{section.subtitle}</p>}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {symbols.map((symbol) => (
+            {symbols.map((symbol: any) => (
               <Link key={symbol.id} href={`${dictionaryPath}/${symbol.letter}/${symbol.slug}`} className="rounded-2xl border border-[#e2d7fa] bg-white p-5 hover:border-[#bea8e8]">
                 <div className="mb-1 text-xs text-[#7a67a4]">Litera {symbol.letter}</div>
                 <div className="font-semibold text-[#34255b]">{symbol.name}</div>
@@ -175,7 +175,7 @@ export default async function HomePage() {
     <main className="min-h-screen bg-[#fefdf8] text-[#2c2240]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="mx-auto max-w-6xl px-6 py-12">
-        {homepageSections.map((section) => renderSection(section))}
+        {homepageSections.map((section: any) => renderSection(section))}
         <div className="mt-8"><AdSlot config={adsConfig} route="homepage" slotKey="footer" pagePath="/" /></div>
       </div>
     </main>
