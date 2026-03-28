@@ -2,7 +2,30 @@ import { NextResponse } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
 const authSecret = process.env.NEXTAUTH_SECRET
+
+// ── Rate limiting ──────────────────────────────────────────────────────────────
+//
+// NOTE: Next.js middleware runs on the Edge Runtime which does NOT support
+// Node.js modules (ioredis, net, etc.). We intentionally keep an in-memory Map
+// here. This is safe because:
+//   1. DreamCMS runs as a SINGLE FORK process (instances: 1, exec_mode: 'fork')
+//      so one Map == one source of truth.
+//   2. The Map is self-cleaning: expired entries are pruned on every write to
+//      keep memory bounded.
+//
+// For cross-process or multi-instance rate limiting, migrate to a lightweight
+// Edge-compatible Redis client (e.g. @upstash/redis).
+
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+
+/** Remove expired entries to prevent unbounded Map growth. */
+function pruneRateLimitMap() {
+  const now = Date.now()
+  for (const [k, v] of rateLimitMap) {
+    if (v.resetAt < now) rateLimitMap.delete(k)
+  }
+}
+
 const RATE_LIMITS = {
   '/api/auth/callback/credentials': { max: 5, windowMs: 15 * 60 * 1000 },
   '/api/newsletter/subscribe': { max: 20, windowMs: 15 * 60 * 1000 },
@@ -66,6 +89,9 @@ function hasValidSameOriginHeaders(req: Request, url: URL) {
 function checkRateLimit(pathname: string, ip: string) {
   const config = RATE_LIMITS[pathname as keyof typeof RATE_LIMITS]
   if (!config) return true
+
+  // Prune stale entries periodically (every ~50 writes) to keep Map bounded
+  if (rateLimitMap.size % 50 === 0) pruneRateLimitMap()
 
   const now = Date.now()
   const key = `${pathname}:${ip}`

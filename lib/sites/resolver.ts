@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { headers } from 'next/headers'
 import { prisma } from '@/lib/prisma'
+import { getCachedSite, setCachedSite } from '@/lib/redis'
 import { defaultAdsConfig, mergeAdsConfig } from '@/lib/ads/config'
 import { normalizeHomepageSections } from '@/lib/sites/homepage'
 import { getSitePack } from '@/lib/sites/registry'
@@ -33,6 +34,16 @@ function toFooterLinks(value: unknown): SiteFooterLink[] | undefined {
 export const resolveCurrentSite = cache(async () => {
   const headerStore = headers()
   const host = normalizeHost(headerStore.get('x-forwarded-host') || headerStore.get('host'))
+
+  // ── 1. Redis cache check (avoids MySQL round-trip on every page render) ────
+  try {
+    const cached = await getCachedSite(host)
+    if (cached) {
+      return JSON.parse(cached)
+    }
+  } catch {
+    // Redis unavailable — continue to DB resolution
+  }
 
   try {
     const sites = await prisma.site.findMany({ where: { isActive: true }, orderBy: { createdAt: 'asc' } })
@@ -89,7 +100,7 @@ export const resolveCurrentSite = cache(async () => {
       pack.homepage.sections,
     )
 
-    return {
+    const result = {
       host,
       site: {
         ...site,
@@ -99,6 +110,17 @@ export const resolveCurrentSite = cache(async () => {
       sitePack: pack,
       adsConfig: mergeAdsConfig(seoSettings?.adsConfig || defaultAdsConfig),
     }
+
+    // ── 2. Persist to Redis for next request (5-minute TTL) ─────────────────
+    // sitePack contains functions — strip it before serialising
+    try {
+      const serialisable = { ...result, sitePack: undefined }
+      await setCachedSite(host, JSON.stringify(serialisable))
+    } catch {
+      // Non-critical — continue without caching
+    }
+
+    return result
   } catch {
     const site: ResolvedSiteConfig = {
       name: 'Cand Visam',
