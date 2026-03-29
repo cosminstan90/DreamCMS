@@ -13,24 +13,40 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
     setError('')
 
     const form = e.currentTarget
-    const formData = new FormData(form)
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
     try {
+      // Fetch CSRF token first
+      const csrfRes = await fetch('/api/auth/csrf')
+      const { csrfToken } = await csrfRes.json()
+
+      const body = new URLSearchParams({
+        email,
+        password,
+        callbackUrl,
+        csrfToken,
+      })
+
       const response = await fetch('/api/auth/callback/credentials', {
         method: 'POST',
-        body: new URLSearchParams(formData as unknown as Record<string, string>),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
         redirect: 'manual',
       })
 
-      if (response.status === 302) {
-        const location = response.headers.get('location')
-        if (location) {
+      // redirect: 'manual' returns type 'opaqueredirect' with status 0 on redirect
+      if (response.type === 'opaqueredirect' || response.ok) {
+        window.location.href = callbackUrl
+      } else if (response.status === 302) {
+        const location = response.headers.get('location') || callbackUrl
+        if (location.includes('error=')) {
+          setError('Email sau parolă invalidă.')
+        } else {
           window.location.href = location
         }
-      } else if (response.status === 401) {
-        setError('Email sau parolă invalidă.')
       } else {
-        setError('Eroare necunoscută la autentificare.')
+        setError('Email sau parolă invalidă.')
       }
     } catch (err) {
       setError('Eroare de conexiune. Încercați din nou.')
