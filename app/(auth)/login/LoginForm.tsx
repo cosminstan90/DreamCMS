@@ -17,29 +17,19 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
     const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
     try {
-      // Fetch CSRF token first
-      const csrfRes = await fetch('/api/auth/csrf')
-      const { csrfToken } = await csrfRes.json()
-
-      const body = new URLSearchParams({
-        email,
-        password,
-        callbackUrl,
-        csrfToken,
-      })
-
-      const response = await fetch('/api/auth/callback/credentials', {
+      const response = await fetch('/api/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       })
 
-      // After following redirects, check the final URL for errors
-      const finalUrl = response.url
-      if (finalUrl.includes('error=')) {
-        setError('Email sau parolă invalidă.')
-      } else {
+      const data = await response.json()
+
+      if (response.ok && data.ok) {
+        // Login successful — redirect to dashboard
         window.location.href = callbackUrl
+      } else {
+        setError(data.error || 'Email sau parolă invalidă.')
       }
     } catch (err) {
       setError('Eroare de conexiune. Încercați din nou.')
@@ -61,8 +51,6 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input type="hidden" name="callbackUrl" value={callbackUrl} />
-
           <div>
             <label className="block text-sm font-medium mb-1.5 text-slate-300" htmlFor="email">
               Email
