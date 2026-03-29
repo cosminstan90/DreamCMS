@@ -32,21 +32,14 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),
-        redirect: 'manual',
       })
 
-      // redirect: 'manual' returns type 'opaqueredirect' with status 0 on redirect
-      if (response.type === 'opaqueredirect' || response.ok) {
-        window.location.href = callbackUrl
-      } else if (response.status === 302) {
-        const location = response.headers.get('location') || callbackUrl
-        if (location.includes('error=')) {
-          setError('Email sau parolă invalidă.')
-        } else {
-          window.location.href = location
-        }
-      } else {
+      // After following redirects, check the final URL for errors
+      const finalUrl = response.url
+      if (finalUrl.includes('error=')) {
         setError('Email sau parolă invalidă.')
+      } else {
+        window.location.href = callbackUrl
       }
     } catch (err) {
       setError('Eroare de conexiune. Încercați din nou.')
