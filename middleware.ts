@@ -66,6 +66,7 @@ function isCorsPublicApi(pathname: string) {
 
 function isCsrfExempt(pathname: string) {
   return pathname.startsWith('/api/auth/')
+    || pathname === '/api/login'
     || pathname === '/api/newsletter/subscribe'
     || pathname === '/api/analytics/event'
     || pathname.startsWith('/api/ads/events')
@@ -164,7 +165,12 @@ export async function middleware(req: Request) {
   }
 
   if (pathname.startsWith('/admin')) {
-    const token = await getToken({ req, secret: authSecret })
+    const token = await getToken({
+      req,
+      secret: authSecret,
+      cookieName: 'next-auth.session-token',
+      salt: 'next-auth.session-token',
+    })
     if (!token) {
       const loginUrl = new URL('/login', url)
       loginUrl.searchParams.set('callbackUrl', pathname)
