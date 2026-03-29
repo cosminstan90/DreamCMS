@@ -6,9 +6,13 @@ import { sanitizeCallbackUrl } from "@/lib/security/request"
 
 export async function authenticate(_prevState: string | undefined, formData: FormData) {
   const callbackUrl = sanitizeCallbackUrl(String(formData.get("callbackUrl") || "/admin/dashboard"))
+  const email = String(formData.get("email") || "")
+  const password = String(formData.get("password") || "")
+
   try {
     await signIn('credentials', {
-      ...Object.fromEntries(formData),
+      email,
+      password,
       redirectTo: callbackUrl
     })
   } catch (error) {
