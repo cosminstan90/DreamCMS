@@ -18,7 +18,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
     try {
       const response = await fetch('/api/auth/callback/credentials', {
         method: 'POST',
-        body: new URLSearchParams(formData as any),
+        body: new URLSearchParams(formData as unknown as Record<string, string>),
         redirect: 'manual',
       })
 
