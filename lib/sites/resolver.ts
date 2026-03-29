@@ -39,7 +39,13 @@ export const resolveCurrentSite = cache(async () => {
   try {
     const cached = await getCachedSite(host)
     if (cached) {
-      return JSON.parse(cached)
+      const parsed = JSON.parse(cached)
+      // sitePack contains functions and is stripped before serialisation —
+      // re-hydrate it from the registry using the stored templatePack key.
+      if (!parsed.sitePack) {
+        parsed.sitePack = getSitePack(parsed.site?.templatePack || 'pagani')
+      }
+      return parsed
     }
   } catch {
     // Redis unavailable — continue to DB resolution
