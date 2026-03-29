@@ -46,7 +46,7 @@ export function PublicSiteShell({
       <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#f4ecff_0%,_#fefdf8_42%,_#fdfaf3_100%)]">
         <header className="sticky top-0 z-30 border-b border-white/40 bg-[rgba(249,244,255,0.78)] backdrop-blur-xl">
           <div className="mx-auto max-w-[1380px] px-4 py-4 md:px-6">
-            <div className="grid gap-4 rounded-[2rem] border border-white/50 bg-white/35 px-4 py-4 shadow-[0_18px_60px_rgba(84,58,130,0.08)] backdrop-blur md:px-6 lg:grid-cols-[auto_minmax(0,1fr)_minmax(280px,420px)] lg:items-center">
+            <div className="grid gap-4 rounded-[2rem] border border-white/50 bg-white/35 px-4 py-4 shadow-[0_18px_60px_rgba(84,58,130,0.08)] backdrop-blur md:px-6 lg:grid-cols-[auto_minmax(0,1fr)_minmax(220px,300px)] lg:items-center">
               <div className="flex items-center gap-4">
                 <Link href="/" className="inline-flex h-14 w-14 items-center justify-center rounded-[1.6rem] bg-[linear-gradient(180deg,#34255b,#24183d)] text-lg font-semibold text-white shadow-[0_14px_30px_rgba(50,35,90,0.28)]">
                   {logoText}
@@ -59,25 +59,26 @@ export function PublicSiteShell({
                 </div>
               </div>
 
-              <nav className="order-3 flex flex-wrap items-center gap-2 text-sm text-[#5f4b80] lg:order-2 lg:justify-center">
-                {dictionaryPath && (
-                  <Link href={dictionaryPath} className="rounded-full border border-[#dfd5ef] bg-white/80 px-3 py-2 transition-colors hover:border-[#c9b7e8] hover:text-[#3f2b63]">
-                    {dictionaryLabel}
-                  </Link>
-                )}
-                {categories.map((category) => (
+              <nav className="order-3 flex items-center gap-1 text-sm text-[#5f4b80] lg:order-2 lg:justify-center">
+                {[
+                  { href: '/', label: 'Acasă' },
+                  { href: '/dictionar', label: 'Dictionar' },
+                  { href: '/cauta', label: 'Categorii' },
+                  { href: '/despre', label: 'Despre' },
+                  { href: '/contact', label: 'Contact' },
+                ].map((item) => (
                   <Link
-                    key={category.id}
-                    href={`/${category.slug}`}
-                    className="rounded-full border border-[#dfd5ef] bg-white/80 px-3 py-2 transition-colors hover:border-[#c9b7e8] hover:text-[#3f2b63]"
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-lg px-4 py-2 font-medium transition-colors hover:bg-[#f0eaff] hover:text-[#3f2b63]"
                   >
-                    {category.name}
+                    {item.label}
                   </Link>
                 ))}
               </nav>
 
               <div className="order-2 lg:order-3">
-                <SearchForm actionPath={searchPath} variant="dreamy" placeholder="Cauta simboluri, vise, emotii sau ghiduri" />
+                <SearchForm actionPath={searchPath} variant="dreamy" placeholder="Cauta vise, simboluri..." />
               </div>
             </div>
           </div>
