@@ -131,7 +131,7 @@ export function PublicSiteShell({
             </div>
 
             <div className="flex flex-col gap-3 pt-6 text-xs uppercase tracking-[0.18em] text-[#8f78ab] md:flex-row md:items-center md:justify-between">
-              <span>Lectura lenta. Brand clar. Monetizare integrata discret.</span>
+              <span>Pagani.ro &mdash; Copyright 2026 &nbsp;|&nbsp; <a href="https://stancosmin.com" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#4f35a1] transition-colors">Crafted by Cosmin Stan</a></span>
               <span>{siteName}</span>
             </div>
           </div>
