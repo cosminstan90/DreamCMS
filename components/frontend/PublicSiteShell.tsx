@@ -62,7 +62,8 @@ export function PublicSiteShell({
               <nav className="order-3 flex items-center gap-1 text-sm text-[#5f4b80] lg:order-2 lg:justify-center">
                 {[
                   { href: '/', label: 'Acasă' },
-                  { href: '/dictionar', label: 'Dictionar' },
+                  { href: '/rugaciuni', label: 'Rugăciuni' },
+                  { href: '/dictionar', label: 'Dicționar' },
                   { href: '/cauta', label: 'Categorii' },
                   { href: '/despre', label: 'Despre' },
                   { href: '/contact', label: 'Contact' },
@@ -78,7 +79,7 @@ export function PublicSiteShell({
               </nav>
 
               <div className="order-2 lg:order-3">
-                <SearchForm actionPath={searchPath} variant="dreamy" placeholder="Cauta vise, simboluri..." />
+                <SearchForm actionPath={searchPath} variant="dreamy" placeholder="Cauta vise, rugaciuni..." />
               </div>
             </div>
           </div>
@@ -90,9 +91,9 @@ export function PublicSiteShell({
           <div className="mx-auto max-w-6xl px-6 py-14">
             <div className="grid gap-10 border-b border-[#eadff8] pb-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
               <div>
-                <div className="mb-3 text-xs uppercase tracking-[0.24em] text-[#8f78ab]">cand visam</div>
+                <div className="mb-3 text-xs uppercase tracking-[0.24em] text-[#8f78ab]">pagani</div>
                 <div className="max-w-2xl font-serif text-3xl leading-tight text-[#2f2050] md:text-4xl">
-                  Un spatiu editorial calm pentru vise, simboluri si intelesuri care merita citite in tihna.
+                  Un spatiu calm pentru vise, rugaciuni si intelesuri care merita citite in tihna.
                 </div>
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-[#5f4b80]">{footerDescription}</p>
                 <div className="mt-6 flex flex-wrap gap-3 text-sm">

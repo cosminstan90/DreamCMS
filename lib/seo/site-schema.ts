@@ -11,9 +11,9 @@ function normalizeSiteUrl(siteUrl: string) {
 
 export function generateSiteSchemas(input: SiteSchemaInput) {
   const siteUrl = normalizeSiteUrl(input.siteUrl || 'https://pagani.ro')
-  const siteName = input.siteName || 'Cand Visam'
+  const siteName = input.siteName || 'Pagani'
   const searchPath = input.searchPath || '/cauta'
-  const description = input.description || 'Platforma editoriala romaneasca despre interpretari de vise si simboluri onirice.'
+  const description = input.description || 'Platforma editoriala romaneasca despre interpretarea viselor, rugaciuni si ghiduri spirituale.'
 
   return {
     '@context': 'https://schema.org',

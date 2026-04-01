@@ -177,7 +177,7 @@ export function HubTemplate({
           {excerpt && <p className="mt-4 max-w-3xl text-lg text-[#5f4b80]">{excerpt}</p>}
           <div className="mt-5 flex flex-wrap gap-3 text-sm text-[#5f4b80]">
             <span>{clusterName || 'Cluster principal'}</span>
-            <span>{authorName || 'Echipa Cand Visam'}</span>
+            <span>{authorName || 'Echipa Pagani'}</span>
             <span>{publishedAt ? new Date(publishedAt).toLocaleDateString('ro-RO') : ''}</span>
             <span>{minutes} min citire</span>
           </div>

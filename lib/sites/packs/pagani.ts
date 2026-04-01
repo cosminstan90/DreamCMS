@@ -3,12 +3,12 @@ import type { SitePack } from '@/lib/sites/types'
 
 export const paganiSitePack: SitePack = {
   key: 'pagani',
-  displayName: 'Cand Visam',
+  displayName: 'Pagani',
   shell: {
-    logoText: 'CV',
-    headerTagline: 'Interpretari de vise, simboluri si ghiduri onirice',
+    logoText: 'P',
+    headerTagline: 'Vise, rugaciuni si ghiduri pentru suflet',
     footerDescription:
-      'Candvisam.ro este construit ca o biblioteca editoriala despre vise, simboluri si context psihologic, cu accent pe claritate, transparenta si continut util pentru cititorii din Romania.',
+      'Pagani.ro este un spatiu editorial dedicat interpretarii viselor, rugaciunilor si ghidurilor spirituale — construit cu grija pentru cititorii din Romania.',
     footerLinks: [
       { href: '/despre', label: 'Despre' },
       { href: '/contact', label: 'Contact' },
@@ -25,7 +25,7 @@ export const paganiSitePack: SitePack = {
     authorsPath: '/autori',
   },
   labels: {
-    homeTitle: 'Interpretari vise si dictionar simboluri',
+    homeTitle: 'Interpretarea viselor si rugaciuni',
     dictionaryCta: 'Exploreaza dictionarul',
     searchCta: 'Cauta in site',
   },
@@ -34,8 +34,8 @@ export const paganiSitePack: SitePack = {
       {
         key: 'hero',
         enabled: true,
-        title: 'Interpretari vise si dictionar simboluri',
-        subtitle: 'Ghiduri onirice explicate clar, pentru cititori care vor raspunsuri practice si context simbolic.',
+        title: 'Interpretarea viselor si rugaciuni',
+        subtitle: 'Ghiduri onirice, rugaciuni si simboluri explicate clar, pentru cititori care cauta raspunsuri si liniste.',
       },
       {
         key: 'latestPosts',
@@ -58,8 +58,8 @@ export const paganiSitePack: SitePack = {
       {
         key: 'newsletter',
         enabled: true,
-        title: 'Aboneaza-te la Cand Visam',
-        subtitle: 'Trimitem cele mai bune interpretari, ghiduri SEO-ready si simboluri noi.',
+        title: 'Aboneaza-te la Pagani',
+        subtitle: 'Trimitem cele mai bune interpretari, rugaciuni si ghiduri noi.',
       },
     ],
   },

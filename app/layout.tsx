@@ -17,8 +17,8 @@ const geistMono = localFont({
 export async function generateMetadata(): Promise<Metadata> {
   const { site } = await resolveCurrentSite()
   const siteUrl = site.siteUrl || 'https://pagani.ro'
-  const siteName = site.name || 'Cand Visam'
-  const description = site.description || 'Interpretari de vise, simboluri onirice si ghiduri editoriale pentru publicul din Romania.'
+  const siteName = site.name || 'Pagani'
+  const description = site.description || 'Interpretarea viselor, rugaciuni si ghiduri spirituale pentru publicul din Romania.'
 
   return {
     metadataBase: new URL(siteUrl),

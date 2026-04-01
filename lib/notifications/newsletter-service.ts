@@ -14,7 +14,7 @@ function buildWelcomeHtml(name: string | null) {
   const safeName = name ? escapeHtml(name) : ''
   return `
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#1f2937">
-      <h2>Bine ai venit la Cand Visam</h2>
+      <h2>Bine ai venit la Pagani</h2>
       <p>${safeName ? `Salut, ${safeName}!` : 'Salut!'} Iti multumim pentru abonare.</p>
       <p>Vei primi interpretari de vise, simboluri noi si idei practice pentru continutul oneiric.</p>
       <p style="font-size:12px;color:#6b7280">Daca nu doresti emailuri viitoare, poti raspunde cu "unsubscribe".</p>
@@ -23,7 +23,7 @@ function buildWelcomeHtml(name: string | null) {
 }
 
 export async function sendNewsletterWelcomeEmail(email: string, name: string | null) {
-  await sendEmail(email, 'Bine ai venit la Cand Visam', buildWelcomeHtml(name))
+  await sendEmail(email, 'Bine ai venit la Pagani', buildWelcomeHtml(name))
 }
 
 function buildDigestHtml(items: Array<{ title: string; excerpt: string | null; url: string; publishedAt: Date | null }>, siteUrl: string) {
@@ -38,7 +38,7 @@ function buildDigestHtml(items: Array<{ title: string; excerpt: string | null; u
 
   return `
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#1f2937">
-      <h2>Digest saptamanal Cand Visam</h2>
+      <h2>Digest saptamanal Pagani</h2>
       <p>Top continut publicat recent pe ${siteUrl}.</p>
       <ul style="padding-left:18px">${list}</ul>
       <p><a href="${siteUrl}" style="color:#6d28d9">Vezi toate articolele</a></p>
@@ -95,7 +95,7 @@ export async function sendWeeklyDigest(maxRecipients = 500) {
   let sent = 0
 
   for (const subscriber of subscribers) {
-    await sendEmail(subscriber.email, 'Digest saptamanal - Cand Visam', html)
+    await sendEmail(subscriber.email, 'Digest saptamanal - Pagani', html)
     sent += 1
   }
 

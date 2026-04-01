@@ -137,7 +137,7 @@ export function ArticleTemplate(props: ArticleTemplateProps) {
               {excerpt && <p className="mt-5 max-w-2xl text-lg leading-8 text-[#5f4b80]">{excerpt}</p>}
 
               <div className="mt-8 flex flex-wrap gap-4 text-sm text-[#6a5a93]">
-                <span>{authorName || 'Echipa Cand Visam'}</span>
+                <span>{authorName || 'Echipa Pagani'}</span>
                 <span>{publishedAt ? new Date(publishedAt).toLocaleDateString() : ''}</span>
                 <span>{minutes} min citire</span>
               </div>

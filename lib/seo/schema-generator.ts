@@ -128,7 +128,7 @@ export function generateSchema(
   speakableData?: SpeakableData,
 ) {
   const siteUrl = seoSettings.siteUrl || 'https://pagani.ro'
-  const siteName = seoSettings.siteName || 'Cand Visam'
+  const siteName = seoSettings.siteName || 'Pagani'
   const slug = post.slug || ''
   const url = normalizeUrl(siteUrl, slug)
   const title = post.metaTitle || post.title || post.name || ''

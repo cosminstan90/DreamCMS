@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch {
     return buildMetadata({
       siteUrl: 'https://pagani.ro',
-      siteName: 'Cand Visam',
+      siteName: 'Pagani',
       title: 'Dictionar de simboluri din vise',
       description: 'Index complet A-Z cu simboluri onirice si interpretari detaliate.',
       canonical: 'https://pagani.ro/dictionar',

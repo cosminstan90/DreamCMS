@@ -18,8 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     siteUrl,
     siteName,
-    title: seoSettings?.defaultMetaTitle || 'Interpretari vise si dictionar simboluri',
-    description: seoSettings?.defaultMetaDesc || 'Ultimele interpretari de vise si simboluri onirice explicate.',
+    title: seoSettings?.defaultMetaTitle || 'Interpretarea viselor, rugaciuni si ghiduri spirituale',
+    description: seoSettings?.defaultMetaDesc || 'Interpretari de vise, rugaciuni si ghiduri spirituale pentru suflet.',
     canonical: siteUrl,
   })
 }
@@ -148,8 +148,8 @@ export default async function HomePage() {
                 </div>
                 <div className="homepage-reveal-up mt-10 flex flex-wrap gap-6 text-sm text-[#9a5a15] [animation-delay:520ms]">
                   <span>111, 222, 333 explicate simplu</span>
-                  <span>Love, twin flame, cariera, bani</span>
-                  <span>Ritual editorial pentru trafic organic rece</span>
+                  <span>Iubire, twin flame, cariera, bani</span>
+                  <span>Ghiduri spirituale pentru fiecare zi</span>
                 </div>
               </div>
 
@@ -201,13 +201,13 @@ export default async function HomePage() {
 
         <section className="mx-auto grid max-w-6xl gap-10 px-6 py-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
           <div>
-            <div className="mb-5 text-xs uppercase tracking-[0.25em] text-[#b96b12]">Cum intri in site</div>
+            <div className="mb-5 text-xs uppercase tracking-[0.25em] text-[#b96b12]">Ce gasesti aici</div>
             <h2 className="max-w-2xl font-serif text-3xl leading-tight text-[#4c2d12] md:text-5xl">
-              Gandit pentru raspunsuri rapide, apoi pentru aprofundare spirituala pe teme reale de viata.
+              Raspunsuri clare si ghiduri spirituale pentru teme reale de viata.
             </h2>
           </div>
           <div className="border-l border-[#f0dbc0] pl-0 text-sm leading-7 text-[#7c4810] lg:pl-8">
-            Pentru vizitatoarele care vin din Google, traseul trebuie sa fie instant: vezi semnificatia, intelegi contextul, apoi mergi natural spre iubire, twin flame, cariera sau alte secvente inrudite.
+            Fiecare pagina incepe cu semnificatia directa, apoi aprofundeaza contextul si te ghideaza natural spre iubire, twin flame, cariera sau alte secvente inrudite.
           </div>
         </section>
 
@@ -222,8 +222,8 @@ export default async function HomePage() {
               text: 'Iubire, twin flame, relatii, bani, manifestare si cariera, structurate ca hub-uri si ghiduri suport.',
             },
             {
-              title: 'Layout gandit pentru monetizare',
-              text: 'Spatii naturale pentru ads si recomandari practice, fara sa fractureze increderea sau fluxul lecturii.',
+              title: 'Lectura clara si calma',
+              text: 'Pagini structurate cu grija, in care fiecare sectiune aduce claritate si te ghideaza spre urmatorul pas.',
             },
           ].map((item, index) => (
             <div key={item.title} className="homepage-reveal-up border-t border-[#f0dbc0] pt-5 text-[#6b3f15]" style={{ animationDelay: `${index * 120}ms` }}>
@@ -253,7 +253,7 @@ export default async function HomePage() {
                       <h3 className="text-2xl font-semibold text-[#5b3411] transition-colors duration-300 group-hover:text-[#8a4b10]">
                         {post.title}
                       </h3>
-                      <p className="mt-3 max-w-xl text-sm leading-7 text-[#7c4810]">{post.excerpt || 'Un ghid creat pentru cititoare care cauta confirmare, context si un pas urmator clar.'}</p>
+                      <p className="mt-3 max-w-xl text-sm leading-7 text-[#7c4810]">{post.excerpt || 'Un ghid creat pentru cei care cauta confirmare, context si un pas urmator clar.'}</p>
                     </div>
                   </Link>
                 ))}
@@ -289,10 +289,10 @@ export default async function HomePage() {
             </div>
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <div className="text-sm leading-7 text-[#7c4810]">
-                Pentru `numarangelic`, homepage-ul trebuie sa aduca imediat cele mai cautate secvente si hub-urile cu cea mai mare valoare comerciala: iubire, twin flame, manifestare si bani.
+                Cele mai cautate secvente numerice, explicate clar pentru teme ca iubirea, relatiile twin flame, manifestarea si banii — totul intr-un format accesibil si usor de urmarit.
               </div>
               <div className="text-sm leading-7 text-[#7c4810]">
-                Modelul ideal este: hero -&gt; ghid principal -&gt; teme principale -&gt; secvente populare -&gt; newsletter. Asa obtinem mai multe clickuri interne si un CTR mai bun pe placement-urile native.
+                Incepe cu secventa care te intereseaza, apoi exploreaza ghidurile tematice si interpretarile detaliate pentru fiecare context spiritual.
               </div>
             </div>
             <div className="mt-8">
@@ -331,16 +331,16 @@ export default async function HomePage() {
         <div className="relative mx-auto grid min-h-[calc(100svh-96px)] max-w-[1400px] gap-10 px-0 pb-12 pt-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.78fr)] lg:items-stretch">
           <div className="flex min-h-[520px] flex-col justify-end px-6 pb-8 pt-10 md:px-10 lg:px-14 lg:pb-14">
             <div className="homepage-reveal-up mb-4 inline-flex w-fit rounded-full border border-[#dccccf] bg-white/80 px-4 py-2 text-[11px] uppercase tracking-[0.3em] text-[#7e61ab] backdrop-blur">
-              cand visam
+              pagani
             </div>
             <p className="homepage-reveal-up mb-4 max-w-md text-sm uppercase tracking-[0.22em] text-[#8c739f] [animation-delay:120ms]">
-              ritual editorial pentru interpretarea viselor
+              vise, rugaciuni si ghiduri pentru suflet
             </p>
             <h1 className="homepage-reveal-up max-w-3xl text-balance font-serif text-5xl leading-[0.95] text-[#2d2148] [animation-delay:220ms] md:text-7xl">
-              Un loc calm pentru femeile care cauta sens, simboluri si liniste dupa un vis puternic.
+              Un loc calm pentru cei care cauta sens, rugaciuni si liniste dupa un vis puternic.
             </h1>
             <p className="homepage-reveal-up mt-6 max-w-xl text-base leading-7 text-[#5f4b80] [animation-delay:320ms] md:text-lg">
-              Interpretari clare, dictionar de simboluri si ghiduri care leaga intuitia, contextul emotional si semnele recurente intr-o experienta premium, usor de parcurs.
+              Interpretari de vise, rugaciuni si un dictionar de simboluri care leaga intuitia, contextul emotional si semnele recurente intr-o experienta clara si usor de parcurs.
             </p>
             <div className="homepage-reveal-up mt-8 flex flex-wrap gap-3 [animation-delay:420ms]">
               <Link href={heroPost?.category?.slug && heroPost?.slug ? `/${heroPost.category.slug}/${heroPost.slug}` : '/dictionar'} className="rounded-full bg-[#2f2050] px-6 py-3 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#24183d]">
@@ -353,9 +353,9 @@ export default async function HomePage() {
               )}
             </div>
             <div className="homepage-reveal-up mt-10 flex flex-wrap gap-6 text-sm text-[#6d5a95] [animation-delay:520ms]">
-              <span>Interpretari pe teme feminine</span>
+              <span>Interpretari de vise si rugaciuni</span>
               <span>Simboluri recurente explicate simplu</span>
-              <span>Ritm editorial gandit pentru lectura lunga</span>
+              <span>Ghiduri spirituale pentru fiecare zi</span>
             </div>
           </div>
 
@@ -388,10 +388,10 @@ export default async function HomePage() {
                     {heroPost?.category?.name || 'Selectie editoriala'}
                   </p>
                   <h2 className="text-3xl font-semibold leading-tight text-white md:text-4xl">
-                    {heroPost?.title || 'Vise, simboluri si intelesuri pentru serile in care cauti un raspuns clar.'}
+                    {heroPost?.title || 'Vise, rugaciuni si intelesuri pentru momentele in care cauti un raspuns clar.'}
                   </h2>
                   <p className="mt-4 max-w-sm text-sm leading-6 text-white/80">
-                    {heroPost?.excerpt || 'Porneste cu o lectura amplasata intr-un peisaj calm, construit pentru sesiuni lungi si reveniri naturale.'}
+                    {heroPost?.excerpt || 'Interpretari si rugaciuni alese cu grija, intr-un spatiu calm construit pentru liniste si aprofundare.'}
                   </p>
                 </div>
               </div>
@@ -409,27 +409,27 @@ export default async function HomePage() {
         <div>
           <div className="mb-5 text-xs uppercase tracking-[0.25em] text-[#8f78ab]">Ce poti explora aici</div>
           <h2 className="max-w-2xl font-serif text-3xl leading-tight text-[#2d2148] md:text-5xl">
-            Construit ca o revista spirituala lenta, nu ca un agregator de raspunsuri rapide.
+            Un spatiu pentru vise, rugaciuni si simboluri — construit pentru claritate, nu pentru graba.
           </h2>
         </div>
         <div className="border-l border-[#e8dcf9] pl-0 text-sm leading-7 text-[#5f4b80] lg:pl-8">
-          Descoperirea este gandita pentru femei care citesc intuitiv: prima lectura aduce raspunsul direct, iar restul paginii aprofundeaza simbolurile, starile si conexiunile pe care merita sa le urmaresti.
+          Fiecare pagina incepe cu raspunsul direct, apoi aprofundeaza simbolurile, starile si conexiunile pe care merita sa le urmaresti — fie ca e vorba de un vis, o rugaciune sau un ghid spiritual.
         </div>
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-8 px-6 pb-16 lg:grid-cols-3">
         {[
           {
-            title: 'Interpretari de context',
+            title: 'Interpretari de vise',
             text: 'Articole pentru vise despre familie, relatii, anxietate, dor, sarcina, separare sau transformare personala.',
           },
           {
-            title: 'Dictionar pentru reveniri rapide',
-            text: 'Un index A-Z pentru simbolurile care apar recurent si pentru serile in care vrei raspunsuri fara sa te pierzi in prea multe pagini.',
+            title: 'Rugaciuni si ghiduri',
+            text: 'Rugaciuni pentru momente importante, situatii dificile si zile in care ai nevoie de liniste si putere interioara.',
           },
           {
-            title: 'Lectura prietenoasa cu ads',
-            text: 'Ritmul paginii lasa respiratie intre sectiuni, astfel incat monetizarea sa existe fara sa rupa atmosfera editoriala.',
+            title: 'Dictionar de simboluri',
+            text: 'Un index A-Z pentru simbolurile care apar recurent in vise — explicate clar, fara sa te pierzi in prea multe pagini.',
           },
         ].map((item, index) => (
           <div
@@ -468,7 +468,7 @@ export default async function HomePage() {
                     <h3 className="text-2xl font-semibold text-[#34255b] transition-colors duration-300 group-hover:text-[#24183d]">
                       {post.title}
                     </h3>
-                    <p className="mt-3 max-w-xl text-sm leading-7 text-[#5f4b80]">{post.excerpt || 'Citeste o interpretare structurata, scrisa pentru lectura lunga si reveniri naturale.'}</p>
+                    <p className="mt-3 max-w-xl text-sm leading-7 text-[#5f4b80]">{post.excerpt || 'Citeste o interpretare structurata, cu context clar si raspunsuri practice.'}</p>
                   </div>
                 </Link>
               ))}
@@ -534,13 +534,13 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 pb-12">
         <div className="rounded-[2rem] border border-[#eadff8] bg-white/85 p-6 backdrop-blur md:p-8">
-          <div className="mb-5 text-xs uppercase tracking-[0.25em] text-[#8f78ab]">Ritm editorial</div>
+          <div className="mb-5 text-xs uppercase tracking-[0.25em] text-[#8f78ab]">Cum este organizat continutul</div>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="text-sm leading-7 text-[#5f4b80]">
-              Homepage-ul este gandit pentru scanare rapida, lectura lunga si ads integrate intre momente naturale de pauza. Brandul ramane principal, iar monetizarea se aseaza in spatii respirabile.
+              Fiecare pagina este structurata pentru a oferi mai intai un raspuns clar, apoi context si aprofundare — fie ca e vorba de un vis, o rugaciune sau un simbol din dictionar.
             </div>
             <div className="text-sm leading-7 text-[#5f4b80]">
-              Pentru vizitatoarele recurente, traseul ideal este: hero -&gt; articol recomandat -&gt; dictionar -&gt; newsletter. Asta creste timpul in site si lasa loc pentru placement-uri curate.
+              Poti incepe cu articolul recomandat, apoi explora dictionarul de simboluri sau sectiunea de rugaciuni. Totul este conectat natural pentru a te ghida spre raspunsuri utile.
             </div>
           </div>
           <div className="mt-8">
@@ -554,8 +554,8 @@ export default async function HomePage() {
         <NewsletterCta
           sourcePath="/"
           variantStyle="dreamy"
-          title="Primeste interpretari noi in acelasi ton calm si clar"
-          subtitle="Trimitem lecturi noi, simboluri actualizate si ghiduri pentru vise recurente intr-un format usor de parcurs."
+          title="Primeste interpretari si rugaciuni noi in fiecare saptamana"
+          subtitle="Trimitem interpretari de vise, rugaciuni si ghiduri spirituale noi intr-un format calm si usor de parcurs."
         />
         <div className="mt-8">
           <AdSlot config={adsConfig} route="homepage" slotKey="footer" pagePath="/" />

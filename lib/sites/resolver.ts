@@ -84,7 +84,7 @@ export const resolveCurrentSite = cache(async () => {
           isActive: matched.isActive,
         }
       : {
-          name: seoSettings?.siteName || 'Cand Visam',
+          name: seoSettings?.siteName || 'Pagani',
           slug: 'pagani',
           primaryDomain: host || 'pagani.ro',
           siteUrl: normalizeSiteUrl(seoSettings?.siteUrl, host || 'pagani.ro'),
@@ -92,9 +92,9 @@ export const resolveCurrentSite = cache(async () => {
           siteType: 'publisher',
           themeKey: 'pagani',
           templatePack: 'pagani',
-          logoText: 'CV',
-          tagline: 'Interpretari de vise, simboluri si ghiduri onirice',
-          description: seoSettings?.defaultMetaDesc || 'Interpretari de vise si simboluri onirice.',
+          logoText: 'P',
+          tagline: 'Vise, rugaciuni si ghiduri pentru suflet',
+          description: seoSettings?.defaultMetaDesc || 'Interpretarea viselor, rugaciuni si ghiduri spirituale.',
           searchPath: '/cauta',
           dictionaryPath: '/dictionar',
           isActive: true,
@@ -129,7 +129,7 @@ export const resolveCurrentSite = cache(async () => {
     return result
   } catch {
     const site: ResolvedSiteConfig = {
-      name: 'Cand Visam',
+      name: 'Pagani',
       slug: 'pagani',
       primaryDomain: host || 'pagani.ro',
       siteUrl: normalizeSiteUrl('', host || 'pagani.ro'),
@@ -137,9 +137,9 @@ export const resolveCurrentSite = cache(async () => {
       siteType: 'publisher',
       themeKey: 'pagani',
       templatePack: 'pagani',
-      logoText: 'CV',
-      tagline: 'Interpretari de vise, simboluri si ghiduri onirice',
-      description: 'Interpretari de vise si simboluri onirice.',
+      logoText: 'P',
+      tagline: 'Vise, rugaciuni si ghiduri pentru suflet',
+      description: 'Interpretarea viselor, rugaciuni si ghiduri spirituale.',
       searchPath: '/cauta',
       dictionaryPath: '/dictionar',
       isActive: true,

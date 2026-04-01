@@ -21,7 +21,7 @@ async function main() {
     where: { slug: 'pagani' },
     update: {},
     create: {
-      name: 'Cand Visam',
+      name: 'Pagani',
       slug: 'pagani',
       primaryDomain: 'pagani.ro',
       secondaryDomains: ['www.pagani.ro'],
@@ -30,17 +30,17 @@ async function main() {
       siteType: 'publisher',
       themeKey: 'pagani',
       templatePack: 'pagani',
-      logoText: 'CV',
-      tagline: 'Interpretari de vise, simboluri si ghiduri onirice',
-      description: 'Biblioteca editoriala despre vise, simboluri si sensuri onirice pentru publicul din Romania.',
+      logoText: 'P',
+      tagline: 'Vise, rugaciuni si ghiduri pentru suflet',
+      description: 'Spatiu editorial dedicat interpretarii viselor, rugaciunilor si ghidurilor spirituale pentru publicul din Romania.',
       searchPath: '/cauta',
       dictionaryPath: '/dictionar',
       homepageSections: [
         {
           key: 'hero',
           enabled: true,
-          title: 'Interpretari vise si dictionar simboluri',
-          subtitle: 'Ghiduri onirice explicate clar, pentru cititori care vor raspunsuri practice si context simbolic.',
+          title: 'Interpretarea viselor si rugaciuni',
+          subtitle: 'Ghiduri onirice, rugaciuni si simboluri explicate clar, pentru cititori care cauta raspunsuri si liniste.',
         },
         { key: 'latestPosts', enabled: true, title: 'Ultimele articole', limit: 6 },
         { key: 'categories', enabled: true, title: 'Categorii', limit: 8 },
@@ -48,8 +48,8 @@ async function main() {
         {
           key: 'newsletter',
           enabled: true,
-          title: 'Aboneaza-te la Cand Visam',
-          subtitle: 'Trimitem cele mai bune interpretari, ghiduri SEO-ready si simboluri noi.',
+          title: 'Aboneaza-te la Pagani',
+          subtitle: 'Trimitem cele mai bune interpretari, rugaciuni si ghiduri noi.',
         },
       ],
       footerLinks: [
@@ -65,7 +65,7 @@ async function main() {
     create: {
       id: 'default-seo',
       siteId: site.id,
-      siteName: 'Cand Visam',
+      siteName: 'Pagani',
       siteUrl: 'https://pagani.ro',
     },
   })
@@ -172,6 +172,12 @@ async function main() {
     where: { siteId_slug: { siteId: site.id, slug: 'emotii' } },
     update: {},
     create: { siteId: site.id, name: 'Emotii', slug: 'emotii', parentId: dictionar.id },
+  })
+
+  await prisma.category.upsert({
+    where: { siteId_slug: { siteId: site.id, slug: 'rugaciuni' } },
+    update: {},
+    create: { siteId: site.id, name: 'Rugaciuni', slug: 'rugaciuni' },
   })
 
   console.log('Seeded successfully:', admin.email)
