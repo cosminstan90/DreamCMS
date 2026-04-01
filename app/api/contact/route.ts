@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail } from '@/lib/notifications/email-service'
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'hello@stancosmin.com'
-const HONEYPOT_FIELD = 'website' // bots fill this in, humans don't see it
 
 export async function POST(req: NextRequest) {
   try {
