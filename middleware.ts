@@ -31,6 +31,7 @@ const RATE_LIMITS = {
   '/api/newsletter/subscribe': { max: 20, windowMs: 15 * 60 * 1000 },
   '/api/analytics/event': { max: 60, windowMs: 60 * 1000 },      // 60 events/min per IP
   '/api/redirects/resolve': { max: 120, windowMs: 60 * 1000 },   // 120 lookups/min per IP
+  '/api/contact': { max: 3, windowMs: 15 * 60 * 1000 },          // 3 messages/15 min per IP
 } as const
 const MUTATION_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])
 

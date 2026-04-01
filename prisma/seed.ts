@@ -19,7 +19,12 @@ async function main() {
 
   const site = await prisma.site.upsert({
     where: { slug: 'pagani' },
-    update: {},
+    update: {
+      name: 'Pagani',
+      logoText: 'P',
+      tagline: 'Vise, rugaciuni si ghiduri pentru suflet',
+      description: 'Spatiu editorial dedicat interpretarii viselor, rugaciunilor si ghidurilor spirituale pentru publicul din Romania.',
+    },
     create: {
       name: 'Pagani',
       slug: 'pagani',
@@ -61,7 +66,9 @@ async function main() {
   })
   await prisma.seoSettings.upsert({
     where: { siteId: site.id },
-    update: {},
+    update: {
+      siteName: 'Pagani',
+    },
     create: {
       id: 'default-seo',
       siteId: site.id,

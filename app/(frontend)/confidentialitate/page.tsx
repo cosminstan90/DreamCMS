@@ -20,7 +20,7 @@ export default async function PrivacyPage() {
     >
       <p>Putem colecta date tehnice standard precum IP, user-agent, pagini vizitate si evenimente analitice pentru a intelege performanta continutului.</p>
       <p>In cazul abonarii la newsletter, stocam adresa de email si metadate legate de sursa abonarii pentru raportare si optimizare.</p>
-      <p>Nu vindem date personale. Cererile legate de acces, rectificare sau stergere pot fi trimise la contact@pagani.ro.</p>
+      <p>Nu vindem date personale. Cererile legate de acces, rectificare sau stergere pot fi trimise la hello@stancosmin.com.</p>
     </StaticPageShell>
   )
 }
