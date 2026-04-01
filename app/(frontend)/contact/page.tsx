@@ -18,15 +18,10 @@ export default async function ContactPage() {
       eyebrow="Contact"
       title="Contact"
       intro={dreamy
-        ? 'Pentru intrebari editoriale, corectii, colaborari sau semnalari legate de continut, completeaza formularul de mai jos sau scrie-ne direct.'
-        : 'Pentru intrebari editoriale, colaborari, publicitate sau semnalari legate de interpretari si continut, completeaza formularul de mai jos sau scrie-ne direct.'}
+        ? 'Pentru intrebari editoriale, corectii, colaborari sau semnalari legate de continut, completeaza formularul de mai jos.'
+        : 'Pentru intrebari editoriale, colaborari, publicitate sau semnalari legate de interpretari si continut, completeaza formularul de mai jos.'}
     >
       <ContactForm variant={dreamy ? 'dreamy' : 'angelic'} />
-
-      <div className="mt-10 border-t border-current/10 pt-8">
-        <p><strong>Email direct:</strong> hello@stancosmin.com</p>
-        <p><strong>Subiecte recomandate:</strong> corectii de continut, propuneri de colaborare, publicitate, sesizari privind drepturi sau date personale.</p>
-      </div>
     </StaticPageShell>
   )
 }
