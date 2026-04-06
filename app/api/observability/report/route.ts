@@ -8,9 +8,13 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }
 
-  const { searchParams } = new URL(request.url)
-  const daysParam = Number(searchParams.get('days') || '7')
-  const days = daysParam === 30 ? 30 : 7
-  const report = await getObservabilityReport(days)
-  return NextResponse.json(report)
+  try {
+    const { searchParams } = new URL(request.url)
+    const daysParam = Number(searchParams.get('days') || '7')
+    const days = daysParam === 30 ? 30 : 7
+    const report = await getObservabilityReport(days)
+    return NextResponse.json(report)
+  } catch {
+    return NextResponse.json({ error: 'Nu s-a putut genera raportul.' }, { status: 500 })
+  }
 }

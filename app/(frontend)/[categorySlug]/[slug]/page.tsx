@@ -106,8 +106,10 @@ export default async function CategoryArticlePage({ params }: { params: { catego
 
   const [branding, featuredImage, related, affiliateProducts] = await Promise.all([
     getCurrentSiteBranding(),
-    post.featuredImageId ? prisma.media.findUnique({ where: { id: post.featuredImageId } }) : Promise.resolve(null),
-    relatedPromise,
+    post.featuredImageId
+      ? prisma.media.findUnique({ where: { id: post.featuredImageId } }).catch(() => null)
+      : Promise.resolve(null),
+    relatedPromise.catch(() => []),
     getRecommendedAffiliateProducts({
       templateType: 'article',
       title: post.title,
@@ -115,7 +117,7 @@ export default async function CategoryArticlePage({ params }: { params: { catego
       categorySlug: post.category?.slug,
       categoryName: post.category?.name,
       symbols: dreamSymbols.map((item) => item.symbolName),
-    }),
+    }).catch(() => []),
   ])
 
   const geo = calculateGeoScore(post as any, { name: post.author?.name || null })
