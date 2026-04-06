@@ -117,11 +117,14 @@ export async function POST(req: Request) {
   }
 
   if (action === 'ping-google') {
-    const siteUrl = (context.seoSettings?.siteUrl || context.site.siteUrl || 'https://pagani.ro').replace(/\/$/, '')
-    const target = `${siteUrl}/sitemap.xml`
-    const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(target)}`
-    const result = await pingWithRetry(pingUrl)
-    return NextResponse.json(result)
+    // Google deprecated sitemap ping in June 2023 — endpoint always returns 404.
+    // Submit via Google Search Console instead: https://search.google.com/search-console
+    return NextResponse.json({
+      ok: false,
+      deprecated: true,
+      attempts: [],
+      message: 'Google a inchis endpoint-ul de ping in 2023. Trimite sitemap-ul manual din Google Search Console (search.google.com/search-console).',
+    })
   }
 
   if (action === 'ping-bing') {

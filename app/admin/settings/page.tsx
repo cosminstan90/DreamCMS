@@ -438,12 +438,14 @@ export default function AdminSeoSettingsPage() {
             >
               Preview Sitemap
             </button>
-            <button
-              onClick={() => runSitemapAction('ping-google')}
+            <a
+              href="https://search.google.com/search-console"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-lg bg-slate-700 px-4 py-2 text-slate-100"
             >
-              {working === 'ping-google' ? 'Ping...' : 'Ping Google'}
-            </button>
+              Search Console →
+            </a>
             <button
               onClick={() => runSitemapAction('ping-bing')}
               className="rounded-lg bg-slate-700 px-4 py-2 text-slate-100"
@@ -452,7 +454,7 @@ export default function AdminSeoSettingsPage() {
             </button>
           </div>
 
-          {statusMessage && <p className="text-sm text-slate-200">{statusMessage}</p>}
+          {statusMessage && <p className={`text-sm ${statusMessage.includes('inchis') ? 'text-amber-400' : 'text-slate-200'}`}>{statusMessage}</p>}
 
           {lastAttempts.length > 0 && (
             <div className="space-y-1 rounded-lg border border-slate-700 bg-[#0f172a] p-3 text-xs text-slate-300">

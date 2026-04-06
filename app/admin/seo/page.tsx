@@ -336,10 +336,10 @@ export default function AdminSeoPage() {
           <div className="flex flex-wrap gap-2">
             <button onClick={() => runSitemapAction('regenerate')} className="rounded-lg bg-[#8b5cf6] px-4 py-2 text-white">{working === 'regenerate' ? 'Regeneram...' : 'Regenereaza'}</button>
             <button onClick={() => window.open('/sitemap.xml', '_blank')} className="rounded-lg bg-slate-700 px-4 py-2 text-slate-100">Preview Sitemap</button>
-            <button onClick={() => runSitemapAction('ping-google')} className="rounded-lg bg-slate-700 px-4 py-2 text-slate-100">{working === 'ping-google' ? 'Ping...' : 'Ping Google'}</button>
+            <a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-slate-700 px-4 py-2 text-slate-100">Search Console →</a>
             <button onClick={() => runSitemapAction('ping-bing')} className="rounded-lg bg-slate-700 px-4 py-2 text-slate-100">{working === 'ping-bing' ? 'Ping...' : 'Ping Bing'}</button>
           </div>
-          {statusMessage && <p className="text-sm text-slate-200">{statusMessage}</p>}
+          {statusMessage && <p className={`text-sm ${statusMessage.includes('inchis') ? 'text-amber-400' : 'text-slate-200'}`}>{statusMessage}</p>}
           {lastAttempts.length > 0 && <div className="space-y-1 rounded-lg border border-slate-700 bg-[#0f172a] p-3 text-xs text-slate-300">{lastAttempts.map((attempt) => <div key={attempt.attempt}>Incercarea {attempt.attempt}: {attempt.ok ? `OK (${attempt.status})` : `Eroare${attempt.status ? ` (${attempt.status})` : ''}${attempt.error ? ` - ${attempt.error}` : ''}`}</div>)}</div>}
         </div>
       )}
